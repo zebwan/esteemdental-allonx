@@ -52,6 +52,8 @@ variant — no pill tabs, no Book Now button.
   `prefers-reduced-motion`; anchors and the menu lock route through it)
 - two card sliders (arrows + drag + scroll-snap)
 - full-screen dark mobile overlay, matching the template's "Phone Open" variant
+- menu toggle is a plain hamburger (no background or border) that draws itself
+  into a smile with teeth when the overlay opens
 - a soft top scrim on the hero: the template's 66° gradient darkens the bottom-left where
   the headline sits, but not the top where the nav does, so the logo needed its own cover
 - word-by-word text reveal, opacity `.4→1`, offsets `start 1 → end .3`
@@ -130,6 +132,11 @@ All-on-X cases, an OPG showing their implant positions, and a photo of the actua
 and team. No stock library has a genuine All-on-X patient case — that is clinical
 photography a practice shoots itself, and it is the single biggest trust upgrade available
 to this page.
+
+## Mobile specifics
+
+The CTA proof cards sit three-across on phones with the caption under the image
+rather than stacked full-width — that block is 213px tall instead of ~1300px.
 
 ## Repo
 
