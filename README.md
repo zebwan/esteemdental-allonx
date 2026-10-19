@@ -70,20 +70,28 @@ Large PNGs were re-encoded to JPEG (8.5 MB → 2.0 MB).
 
 ## Sections
 
-Hero → the problem → what is All-on-X → our process → why guided surgery →
-dynamic navigation → **real patients** → your journey → FAQ → CTA band → footer.
+The running order and the copy follow the client's own concept page
+(`Esteem_All_on_X_Landing_Page.html`); the design, components and motion are ours.
 
-"Real patients" is new, added now that the clinic has supplied consented
-before/after photography. The CTA is a brand-brown band carrying the clinic's
-address, both phone numbers, email and hours.
+1. **Hero** — "Considering All-on-X? Know what matters."
+2. **Suitability** — three numbered cards: missing teeth, loose dentures, failing teeth
+3. **All-on-X explained** — a four-tab explainer (the complete picture / the implant /
+   the replacement teeth / the meaning of "X") plus four benefit cards
+4. **Real patients** — carousel of the clinic's consented before/after cases, with a counter
+5. **Your journey** — five-stage tabs from 3D planning to the final teeth
+6. **Questions** — eight Q&A, including an explicit answer on risks
+7. **CTA band** — the clinic's address, both phone numbers, email and hours
+
+Their concept used plain tab swaps; ours crossfade, reveal on scroll, and the
+overview tab plays the clinic's own All-on-X animation.
 
 ## Deliberate differences from the template
 
 - **The hero is light.** The template puts white text over a darkened photo. The
   brand is cream, and the client's clinical photography should not be tinted or
   darkened, so the headline sits beside the image instead of on top of it.
-- **The carousels are sliders**, not scroll-pinned sections, so nobody has to
-  scroll through a carousel to reach the next section.
+- **Tabs and a carousel instead of long stacks**, so the page stays short and
+  nothing has to be scrolled through to reach the next section.
 - Motion, breakpoints, spacing rhythm and component structure still follow the
   template.
 

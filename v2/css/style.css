@@ -481,15 +481,119 @@ section.tint{ background:var(--cream-2); }
 
 
 /* ============================================================
-   REAL CASES — the clinic's own before/after photography
+   SUITABILITY — three numbered cards
    ============================================================ */
-.case-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:48px; }
-.case-shot{ margin:0; }
-.case-shot img{
-  width:100%; height:auto; border-radius:16px;
+.head-row{ display:flex; justify-content:space-between; align-items:flex-end; gap:48px; }
+.head-aside{ max-width:34ch; font-size:15px; line-height:24px; padding-bottom:4px; }
+.sui-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:52px; }
+.sui-card{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  padding:26px 24px 24px; display:flex; flex-direction:column; gap:12px;
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.sui-card:hover{ transform:translateY(-5px); box-shadow:0 18px 40px rgba(134,85,67,.10); }
+.sui-card .n{ font-size:12px; color:var(--muted); }
+.sui-card h3{ font-size:21px; }
+.sui-card p{ font-size:14px; line-height:22px; }
+.sui-media{ margin-top:auto; padding-top:18px; border-radius:12px; overflow:hidden; }
+.sui-media img{ width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; border-radius:12px; }
+
+/* ============================================================
+   FEATURE TABS — the parts of the treatment
+   ============================================================ */
+.kicker{ display:block; font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
+.feat{ display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; align-items:stretch; margin-top:10px; }
+.feat-side{ display:flex; flex-direction:column; align-items:flex-start; }
+.feat-tabs{ display:flex; flex-direction:column; width:100%; margin-bottom:24px; }
+.feat-tab{
+  display:flex; align-items:baseline; gap:12px; width:100%;
+  background:none; border:0; border-top:1px solid var(--line);
+  padding:16px 2px; text-align:left; cursor:pointer;
+  font-size:16px; line-height:1.3; color:var(--brown-deep);
+  transition:color .3s var(--ease), padding-left .3s var(--ease);
+}
+.feat-tabs .feat-tab:last-child{ border-bottom:1px solid var(--line); }
+.feat-tab .mono{ font-size:11px; color:var(--muted); }
+.feat-tab:hover{ padding-left:6px; color:var(--brown); }
+.feat-tab.is-on{ color:var(--brown); }
+.feat-tab.is-on .mono{ color:var(--brown); }
+
+.feat-panel{
+  background:var(--surface); border:1px solid var(--line); border-radius:18px;
+  padding:22px; display:grid; grid-template-rows:1fr auto; gap:20px;
+}
+.feat-media{ border-radius:12px; overflow:hidden; background:var(--cream-3); aspect-ratio:16/9; }
+.feat-media img,.feat-media video{ width:100%; height:100%; object-fit:cover; transition:opacity .35s var(--ease); }
+.feat-media.swap img,.feat-media.swap video{ opacity:0; }
+.feat-copy h3{ font-size:23px; margin-bottom:10px; }
+.feat-copy p{ font-size:15px; line-height:24px; }
+.feat-copy.swap h3,.feat-copy.swap p{ opacity:0; }
+.feat-copy h3,.feat-copy p{ transition:opacity .3s var(--ease); }
+
+/* ============================================================
+   BENEFITS
+   ============================================================ */
+.ben-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:44px; }
+.ben-card{
+  background:var(--cream-2); border-radius:16px; padding:26px 24px;
+  display:flex; flex-direction:column; gap:10px;
+  transition:background-color .4s var(--ease);
+}
+.ben-card:hover{ background:var(--cream-3); }
+.ben-card .n{ font-size:12px; color:var(--muted); }
+.ben-card h4{ font-size:19px; }
+.ben-card p{ font-size:14px; line-height:22px; }
+
+/* ============================================================
+   PATIENT CAROUSEL
+   ============================================================ */
+.pcar{ margin-top:48px; }
+.pcar-track{
+  display:flex; gap:20px; overflow-x:auto; scroll-behavior:smooth;
+  scroll-snap-type:x proximity; scrollbar-width:none; -ms-overflow-style:none;
+  cursor:grab;
+}
+.pcar-track::-webkit-scrollbar{ display:none; }
+.pcar-track.dragging{ cursor:grabbing; scroll-snap-type:none; scroll-behavior:auto; }
+.pslide{ flex:0 0 100%; margin:0; scroll-snap-align:center; }
+.pslide img{
+  width:100%; height:auto; border-radius:18px;
   background:var(--surface); border:1px solid var(--line);
 }
-.case-shot figcaption{ margin-top:14px; font-size:14px; line-height:20px; color:var(--muted); }
+.pslide figcaption{ margin-top:16px; text-align:center; font-size:14px; line-height:21px; color:var(--muted); }
+.pcar-ui{ display:flex; align-items:center; justify-content:center; gap:20px; margin-top:26px; }
+.pcar-count{ font-size:13px; color:var(--muted); letter-spacing:.08em; }
+
+/* ============================================================
+   JOURNEY STEPS
+   ============================================================ */
+.steps{ margin-top:52px; }
+.steps-tabs{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:0;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  margin-bottom:36px;
+}
+.step-tab{
+  display:flex; flex-direction:column; gap:7px; align-items:flex-start;
+  background:none; border:0; border-right:1px solid var(--line);
+  padding:18px 16px; text-align:left; cursor:pointer;
+  font-size:15px; line-height:1.3; color:var(--brown-deep);
+  transition:background-color .3s var(--ease), color .3s var(--ease);
+}
+.steps-tabs .step-tab:last-child{ border-right:0; }
+.step-tab .mono{ font-size:11px; color:var(--muted); }
+.step-tab:hover{ background:var(--cream-2); }
+.step-tab.is-on{ background:var(--cream-2); color:var(--brown); }
+.step-tab.is-on .mono{ color:var(--brown); }
+
+.steps-panel{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+.steps-media{ border-radius:18px; overflow:hidden; background:var(--cream-3); aspect-ratio:4/3; }
+.steps-media img{ width:100%; height:100%; object-fit:cover; transition:opacity .35s var(--ease); }
+.steps-media.swap img{ opacity:0; }
+.steps-copy h3{ font-size:27px; margin:4px 0 14px; }
+.steps-copy p{ font-size:15px; line-height:25px; }
+.steps-copy.swap h3,.steps-copy.swap p{ opacity:0; }
+.steps-copy h3,.steps-copy p{ transition:opacity .3s var(--ease); }
 
 /* ============================================================
    CTA BAND
@@ -593,7 +697,15 @@ footer{
   .stats{ grid-template-columns:repeat(2,1fr); gap:28px 20px; margin-top:40px; padding-top:32px; }
   .stats strong{ font-size:34px; }
   .pin{ padding:60px 0; }
-  .head-row{ flex-direction:column; align-items:flex-start; gap:24px; }
+  .head-row{ flex-direction:column; align-items:flex-start; gap:20px; }
+  .head-aside{ max-width:none; }
+  .sui-grid{ grid-template-columns:1fr; gap:16px; margin-top:34px; }
+  .feat{ grid-template-columns:1fr; gap:22px; }
+  .ben-grid{ grid-template-columns:1fr; gap:14px; margin-top:32px; }
+  .steps-tabs{ grid-template-columns:repeat(5,minmax(132px,1fr)); overflow-x:auto; scrollbar-width:none; }
+  .steps-tabs::-webkit-scrollbar{ display:none; }
+  .steps-panel{ grid-template-columns:1fr; gap:26px; }
+  .steps{ margin-top:34px; }
   .head-actions{ flex-wrap:wrap; }
   .svc-card{ flex-basis:330px; min-height:0; }
   .case-card{ flex-basis:520px; }

@@ -117,50 +117,139 @@
   wireAccordion('.acc-q', '.acc-item');
   wireAccordion('.faq-q', '.faq-item');
 
-  /* ---------- 5. Card sliders ----------
-     The template pins these sections and scrubs them with the page scroll.
-     Here they are ordinary sliders — arrows, drag and snap — so nobody has
-     to scroll through a carousel to reach the next section. */
-  document.querySelectorAll('[data-track]').forEach(function (track) {
-    var section = track.closest('section');
-    var btns = section ? section.querySelectorAll('.sld-btn') : [];
+  /* ---------- 5. Tab groups + patient carousel ---------- */
 
-    function step() {
-      var first = track.firstElementChild;
-      if (!first) return track.clientWidth;
-      var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 20;
-      return first.getBoundingClientRect().width + gap;
-    }
-    function sync() {
-      var max = track.scrollWidth - track.clientWidth - 1;
-      btns.forEach(function (b) {
-        var dir = +b.dataset.dir;
-        b.disabled = dir < 0 ? track.scrollLeft <= 1 : track.scrollLeft >= max;
+  /* a) parts of the treatment */
+  var FEATURES = [
+    ['How the pieces work together.',
+     'Implants sit in the jawbone and support a connected set of replacement teeth. The implants, your new teeth and your bite need to be planned together \u2014 not as separate parts.',
+     'assets/img/step-2.webp', 'A connected full-arch restoration supported by implants', true],
+    ['The implant.',
+     'Titanium dental implants are placed in the jawbone to support the connected replacement teeth. During healing, the surrounding bone integrates with the implants to provide a stable foundation.',
+     'assets/img/fan-fixture.webp', 'A single titanium implant seated in the jawbone'],
+    ['A connected set of teeth.',
+     'The replacement teeth are made as one connected full-arch restoration. High-strength zirconia is used for its strength, durability and natural appearance.',
+     'assets/img/step-4.webp', 'A connected full arch of replacement teeth'],
+    ['What does \u201cX\u201d mean?',
+     'The \u201cX\u201d refers to the number of implants used to support the full arch. Commonly, four or six implants may be used, depending on the individual treatment plan.',
+     'assets/img/hero.jpg', 'A full-arch bridge supported by multiple implants']
+  ];
+
+  /* b) treatment stages */
+  var STEPS = [
+    ['Understand your starting point.',
+     'A clinical examination, CBCT scan and digital scans provide a detailed view of your teeth, gums, jawbone and bite. These records allow the implant positions and replacement teeth to be planned together before surgery, with your anatomy, function and final restoration considered from the beginning.',
+     'assets/img/step-1.jpg', 'A 3D scan reviewed for digital planning'],
+    ['Implant surgery based on your treatment plan.',
+     'The implants are placed during one surgical appointment. A custom-made surgical guide or dynamic navigation may be used to help the dentist place the implants according to the digital plan with greater precision.',
+     'assets/img/step-3.jpg', 'Guided implant placement during surgery'],
+    ['Temporary fixed teeth may be fitted on the same day.',
+     'When conditions allow, temporary fixed teeth can be fitted on the same day as implant surgery, so you can have fixed teeth while the implants heal.',
+     'assets/img/fan-sameday.jpg', 'A fixed temporary bridge in place on the implants'],
+    ['Allow time for healing.',
+     'Over the following months, the implants integrate with the surrounding bone while the gum tissues heal and adapt.',
+     'assets/img/fan-healing.jpg', 'How an implant integrates with the jawbone'],
+    ['Fit and maintain the final teeth.',
+     'When healing and clinical checks indicate readiness, the final full-arch restoration can be fitted. Its design considers appearance, bite, function and cleaning access. Regular professional maintenance remains important after treatment.',
+     'assets/img/step-5.jpg', 'The finished full-arch restoration in place']
+  ];
+
+  function wireTabs(btnSel, data, els, onIndex) {
+    var btns = [].slice.call(document.querySelectorAll(btnSel));
+    if (!btns.length || !els.img) return;
+    btns.forEach(function (btn, i) {
+      btn.addEventListener('click', function () {
+        if (btn.classList.contains('is-on')) return;
+        btns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('is-on'); btn.setAttribute('aria-selected', 'true');
+        var d = data[i];
+        /* fade out, swap, fade back in — a crossfade reads calmer than a jump */
+        els.media.classList.add('swap'); els.copy.classList.add('swap');
+        setTimeout(function () {
+          els.title.textContent = d[0];
+          els.desc.textContent = d[1];
+          var vid = document.getElementById('featVid');
+          if (vid) {
+            /* the client's animation stands in for the still on the overview tab */
+            var useVideo = !!d[4];
+            vid.hidden = !useVideo;
+            els.img.hidden = useVideo;
+            if (useVideo) { vid.play().catch(function(){}); } else { vid.pause(); }
+          }
+          els.img.src = d[2];
+          els.img.alt = d[3];
+          if (onIndex) onIndex(i);
+          els.media.classList.remove('swap'); els.copy.classList.remove('swap');
+        }, 300);
       });
+    });
+  }
+
+  wireTabs('.feat-tab', FEATURES, {
+    img: document.getElementById('featImg'),
+    title: document.getElementById('featTitle'),
+    desc: document.getElementById('featDesc'),
+    media: document.querySelector('.feat-media'),
+    copy: document.querySelector('.feat-copy')
+  });
+
+  var stepCount = document.getElementById('stepCount');
+  wireTabs('.step-tab', STEPS, {
+    img: document.getElementById('stepImg'),
+    title: document.getElementById('stepTitle'),
+    desc: document.getElementById('stepDesc'),
+    media: document.querySelector('.steps-media'),
+    copy: document.querySelector('.steps-copy')
+  }, function (i) {
+    if (stepCount) stepCount.textContent = 'Step 0' + (i + 1) + ' / 0' + STEPS.length;
+  });
+
+  /* c) patient carousel */
+  (function () {
+    var car = document.querySelector('[data-carousel]');
+    if (!car) return;
+    var track = car.querySelector('[data-ptrack]');
+    var slides = [].slice.call(track.children);
+    var now = car.querySelector('[data-pnow]');
+    var total = car.querySelector('[data-ptotal]');
+    var btns = [].slice.call(car.querySelectorAll('[data-pdir]'));
+    var idx = 0;
+    if (total) total.textContent = ('0' + slides.length).slice(-2);
+
+    function paint() {
+      if (now) now.textContent = ('0' + (idx + 1)).slice(-2);
+      btns.forEach(function (b) {
+        var d = +b.dataset.pdir;
+        b.disabled = d < 0 ? idx === 0 : idx === slides.length - 1;
+      });
+    }
+    function goTo(i) {
+      idx = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: slides[idx].offsetLeft - track.offsetLeft, behavior: reduced ? 'auto' : 'smooth' });
+      paint();
     }
     btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        track.scrollBy({ left: +b.dataset.dir * step(), behavior: reduced ? 'auto' : 'smooth' });
-      });
+      b.addEventListener('click', function () { goTo(idx + (+b.dataset.pdir)); });
     });
-    track.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync, { passive: true });
-    /* The first sync runs before the images have laid out, so the track still
-       measures as non-scrollable and both arrows end up disabled. Re-sync as
-       the content settles. */
-    window.addEventListener('load', sync);
-    track.querySelectorAll('img').forEach(function (im) {
-      if (!im.complete) im.addEventListener('load', sync, { once: true });
-    });
-    if (typeof ResizeObserver === 'function') new ResizeObserver(sync).observe(track);
-    sync();
+    /* keep the counter honest if someone swipes instead */
+    var t = null;
+    track.addEventListener('scroll', function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var mid = track.scrollLeft + track.clientWidth / 2;
+        slides.forEach(function (sl, i) {
+          var l = sl.offsetLeft - track.offsetLeft;
+          if (mid >= l && mid < l + sl.offsetWidth) { idx = i; }
+        });
+        paint();
+      }, 120);
+    }, { passive: true });
 
-    /* pointer drag for mouse users (touch already pans natively) */
+    /* pointer drag for mouse users */
     var down = false, startX = 0, startLeft = 0, moved = 0;
     track.addEventListener('pointerdown', function (e) {
       if (e.pointerType === 'touch') return;
-      down = true; moved = 0;
-      startX = e.clientX; startLeft = track.scrollLeft;
+      down = true; moved = 0; startX = e.clientX; startLeft = track.scrollLeft;
       track.classList.add('dragging');
     });
     track.addEventListener('pointermove', function (e) {
@@ -169,20 +258,15 @@
       moved = Math.max(moved, Math.abs(dx));
       track.scrollLeft = startLeft - dx;
     });
-    function release() {
-      if (!down) return;
-      down = false;
-      track.classList.remove('dragging');
-      sync();
-    }
+    function release() { if (!down) return; down = false; track.classList.remove('dragging'); }
     track.addEventListener('pointerup', release);
     track.addEventListener('pointercancel', release);
     track.addEventListener('pointerleave', release);
-    /* swallow the click that ends a drag so cards do not navigate */
-    track.addEventListener('click', function (e) {
-      if (moved > 6) { e.preventDefault(); e.stopPropagation(); }
-    }, true);
-  });
+    track.addEventListener('click', function (e) { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+    paint();
+    window.addEventListener('resize', paint, { passive: true });
+  })();
 
   /* ---------- 6. Word-by-word text reveal ----------
      Template values: opacity .4 → 1, scroll offset "start 1 → end .3" */
