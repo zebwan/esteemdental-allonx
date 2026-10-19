@@ -7,7 +7,8 @@ Esteem to finish the page.
 
 ## 1. The message to send
 
-> Hi Doc, the All-on-X landing page is ready for your review: [link]
+> Hi Doc, the All-on-X landing page is ready for your review:
+> https://zebwan.github.io/esteemdental-allonx/v2/
 >
 > One thing worth flagging. The draft page you sent us had a heading that didn't
 > mention "dental implants" or the clinic's location anywhere, which is the single
@@ -85,6 +86,10 @@ rather than internal shorthand:
 | Planning & treatment | `/all-on-x/#planning-and-treatment` |
 | Questions to ask | `/all-on-x/#questions-to-ask` |
 | Discuss your options | `/all-on-x/#discuss-your-options` |
+
+On the preview those are the same links under
+`https://zebwan.github.io/esteemdental-allonx/v2/` — for example
+`https://zebwan.github.io/esteemdental-allonx/v2/#questions-to-ask`.
 
 Two uses for this. Esteem can send a patient straight to the part that answers their
 question — a WhatsApp reply can link to the questions section rather than the whole
