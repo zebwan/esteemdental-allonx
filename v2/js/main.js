@@ -135,25 +135,6 @@
      'assets/img/hero.jpg', 'A full-arch bridge supported by multiple implants']
   ];
 
-  /* b) treatment stages */
-  var STEPS = [
-    ['Understand your starting point.',
-     'A clinical examination, CBCT scan and digital scans provide a detailed view of your teeth, gums, jawbone and bite. These records allow the implant positions and replacement teeth to be planned together before surgery, with your anatomy, function and final restoration considered from the beginning.',
-     'assets/img/step-1.jpg', 'A 3D scan reviewed for digital planning'],
-    ['Implant surgery based on your treatment plan.',
-     'The implants are placed during one surgical appointment. A custom-made surgical guide or dynamic navigation may be used to help the dentist place the implants according to the digital plan with greater precision.',
-     'assets/img/step-3.jpg', 'Guided implant placement during surgery'],
-    ['Temporary fixed teeth may be fitted on the same day.',
-     'When conditions allow, temporary fixed teeth can be fitted on the same day as implant surgery, so you can have fixed teeth while the implants heal.',
-     'assets/img/fan-sameday.jpg', 'A fixed temporary bridge in place on the implants'],
-    ['Allow time for healing.',
-     'Over the following months, the implants integrate with the surrounding bone while the gum tissues heal and adapt.',
-     'assets/img/fan-healing.jpg', 'How an implant integrates with the jawbone'],
-    ['Fit and maintain the final teeth.',
-     'When healing and clinical checks indicate readiness, the final full-arch restoration can be fitted. Its design considers appearance, bite, function and cleaning access. Regular professional maintenance remains important after treatment.',
-     'assets/img/step-5.jpg', 'The finished full-arch restoration in place']
-  ];
-
   function wireTabs(btnSel, data, els, onIndex) {
     var btns = [].slice.call(document.querySelectorAll(btnSel));
     if (!btns.length || !els.img) return;
@@ -192,17 +173,6 @@
     desc: document.getElementById('featDesc'),
     media: document.querySelector('.feat-media'),
     copy: document.querySelector('.feat-copy')
-  });
-
-  var stepCount = document.getElementById('stepCount');
-  wireTabs('.step-tab', STEPS, {
-    img: document.getElementById('stepImg'),
-    title: document.getElementById('stepTitle'),
-    desc: document.getElementById('stepDesc'),
-    media: document.querySelector('.steps-media'),
-    copy: document.querySelector('.steps-copy')
-  }, function (i) {
-    if (stepCount) stepCount.textContent = 'Step ' + (i + 1) + ' of ' + STEPS.length;
   });
 
   /* c) patient carousel */
@@ -267,6 +237,38 @@
 
     paint();
     window.addEventListener('resize', paint, { passive: true });
+  })();
+
+  /* ---------- 5a2. Journey cards: shrink as the next card stacks on top ----
+     One read pass then one write pass per frame, and only while the stack is
+     near the viewport, so this costs nothing for the rest of the page. */
+  (function () {
+    var stack = document.querySelector('[data-stack]');
+    if (!stack || reduced) return;
+    var cards = [].slice.call(stack.querySelectorAll('.stack-card'));
+    if (cards.length < 2) return;
+    var near = false, queued = false;
+
+    function tick() {
+      queued = false;
+      var tops = cards.map(function (c) { return c.getBoundingClientRect().top; });  /* read */
+      var h = cards[0].offsetHeight || 1;
+      for (var i = 0; i < cards.length - 1; i++) {                                   /* write */
+        var gap = tops[i + 1] - tops[i];
+        var p = Math.min(1, Math.max(0, 1 - (gap - 14) / h));
+        cards[i].style.transform = p ? 'scale(' + (1 - p * 0.05).toFixed(4) + ')' : '';
+      }
+    }
+    function onScroll() { if (near && !queued) { queued = true; requestAnimationFrame(tick); } }
+
+    new IntersectionObserver(function (es) {
+      near = es[0].isIntersecting;
+      if (near) onScroll();
+      else cards.forEach(function (c) { c.style.transform = ''; });
+    }, { rootMargin: '300px 0px' }).observe(stack);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
   })();
 
   /* ---------- 5b. Hero slider ---------- */

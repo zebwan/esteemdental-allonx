@@ -633,33 +633,29 @@ section.tint{ background:var(--cream-2); }
 /* ============================================================
    JOURNEY STEPS
    ============================================================ */
-.steps{ margin-top:52px; }
-.steps-tabs{
-  display:grid; grid-template-columns:repeat(5,1fr); gap:0;
-  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-  margin-bottom:36px;
+/* ============================================================
+   JOURNEY — cards that stack as the page scrolls
+   Each card sticks 14px lower than the one before, so the stack
+   keeps a visible edge of every stage already passed.
+   ============================================================ */
+.stack{ --stack-top:96px; --stack-step:14px; margin-top:52px; display:flex; flex-direction:column; gap:26px; }
+.stack-card{
+  position:sticky; top:calc(var(--stack-top) + var(--i) * var(--stack-step));
+  display:grid; grid-template-columns:.86fr 1.14fr; gap:36px; align-items:center;
+  background:var(--surface); border-radius:22px; padding:26px;
+  box-shadow:0 3px 6px rgba(134,85,67,.05), 0 18px 38px rgba(134,85,67,.11);
+  transform-origin:top center; will-change:transform;
 }
-.step-tab{
-  display:flex; flex-direction:column; gap:7px; align-items:flex-start;
-  background:none; border:0; border-right:1px solid var(--line);
-  padding:18px 16px; text-align:left; cursor:pointer;
-  font-size:15px; line-height:1.3; color:var(--brown-deep);
-  transition:background-color .3s var(--ease), color .3s var(--ease);
-}
-.steps-tabs .step-tab:last-child{ border-right:0; }
-.step-tab .mono{ font-size:11px; color:var(--muted); }
-.step-tab:hover{ background:var(--cream-2); }
-.step-tab.is-on{ background:var(--cream-2); color:var(--brown); }
-.step-tab.is-on .mono{ color:var(--brown); }
-
-.steps-panel{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
-.steps-media{ border-radius:18px; overflow:hidden; background:var(--cream-3); aspect-ratio:4/3; }
-.steps-media img{ width:100%; height:100%; object-fit:cover; transition:opacity .35s var(--ease); }
-.steps-media.swap img{ opacity:0; }
-.steps-copy h3{ font-size:27px; margin:4px 0 14px; }
-.steps-copy p{ font-size:15px; line-height:25px; }
-.steps-copy.swap h3,.steps-copy.swap p{ opacity:0; }
-.steps-copy h3,.steps-copy p{ transition:opacity .3s var(--ease); }
+/* the journey sits on the deepest of the three brand grounds so the
+   stacked edges read against the cards */
+#difference{ background:var(--cream-3); --te-bar2:var(--cream-3); }
+.stack-media{ border-radius:16px; overflow:hidden; background:var(--cream-3); aspect-ratio:4/3; }
+.stack-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+.stack-copy{ padding-right:10px; }
+.stack-copy h3{ font-size:27px; margin:4px 0 14px; }
+.stack-copy p{ font-size:15px; line-height:25px; }
+/* the stage label is a touch quieter than a section kicker */
+.stack-copy .kicker{ font-size:12px; margin-bottom:10px; }
 
 /* ============================================================
    CTA BAND
@@ -732,6 +728,7 @@ footer{
 
 @media (prefers-reduced-motion:reduce){
   .reveal,.reveal-fade,.slide-r{ opacity:1 !important; transform:none !important; transition:none; animation:none; }
+  .stack-card{ position:static; transform:none !important; }
   .pop{ transform:none !important; }
   .tr-word{ opacity:1 !important; }
   .nav-wrap{ transition:none; }
@@ -773,10 +770,11 @@ footer{
   .sui-grid{ grid-template-columns:1fr; gap:16px; margin-top:34px; }
   .feat{ grid-template-columns:1fr; gap:22px; }
   .ben-grid{ grid-template-columns:1fr; gap:14px; margin-top:32px; }
-  .steps-tabs{ grid-template-columns:repeat(5,minmax(132px,1fr)); overflow-x:auto; scrollbar-width:none; }
-  .steps-tabs::-webkit-scrollbar{ display:none; }
-  .steps-panel{ grid-template-columns:1fr; gap:26px; }
-  .steps{ margin-top:34px; }
+  .stack{ --stack-top:88px; --stack-step:12px; margin-top:34px; gap:20px; }
+  .stack-card{ gap:24px; padding:20px; border-radius:20px; }
+  .stack-copy{ padding-right:0; }
+  .stack-copy h3{ font-size:23px; margin:2px 0 11px; }
+  .stack-copy p{ font-size:14px; line-height:23px; }
   .head-actions{ flex-wrap:wrap; }
   .svc-card{ flex-basis:330px; min-height:0; }
   .case-card{ flex-basis:520px; }
@@ -786,6 +784,21 @@ footer{
 }
 
 @media (max-width:809.98px){
+  .stack{ --stack-top:84px; --stack-step:10px; margin-top:30px; gap:18px; }
+  /* stacked in one column every card has to be the same height, or a card with
+     shorter copy would leave the one underneath showing below it. The card gets
+     a floor and the picture takes up whatever the text does not use. */
+  .stack-card{
+    display:flex; flex-direction:column; align-items:stretch; gap:16px;
+    padding:18px; border-radius:18px;
+    min-height:max(520px, 66vh);
+    min-height:max(520px, 66svh);
+  }
+  .stack-media{ aspect-ratio:auto; flex:1 1 auto; min-height:168px; position:relative; }
+  .stack-media img{ position:absolute; inset:0; }
+  .stack-copy{ flex:0 0 auto; padding-right:0; }
+  .stack-copy h3{ font-size:22px; margin:2px 0 10px; }
+  .stack-copy p{ font-size:14px; line-height:23px; }
   h1{ font-size:34px; }
   h2{ font-size:26px; }
   h3{ font-size:19px; }
