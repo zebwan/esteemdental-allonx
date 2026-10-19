@@ -17,8 +17,9 @@
     io.observe(el);
   }
 
-  /* Heading wipe. Each line gets two bars: bar 1 sweeps in and covers the text, bar 2 follows,
-     then both leave to the right and uncover it. 2s per line, lines start 0.2s apart.
+  /* Heading wipe (Esteem variant). The line starts empty: one bar crosses it from left to
+     right and leaves the text behind. The cover that hides the not-yet-revealed text is a
+     child of the bar, so it travels with it and the two can never fall out of step.
      Options: data-wipe-duration="2" (seconds), data-wipe-stagger="0.2", data-wipe-amount="0.35" */
   function wipe(el) {
     if (el.dataset.teDone) return; el.dataset.teDone = "1";
@@ -27,21 +28,14 @@
     if (isNaN(stagger)) stagger = .2;
     var amount = parseFloat(el.getAttribute("data-wipe-amount")) || .35;
     el.innerHTML = lines(el).map(function (h) {
-      return '<span class="te-line"><span class="te-text">' + h + '</span><i class="te-b1"></i><i class="te-b2"></i></span>';
+      return '<span class="te-line"><span class="te-text">' + h + '</span><i class="te-b1"></i></span>';
     }).join("");
-    if (reduce || !Element.prototype.animate) return;
+    if (reduce || !Element.prototype.animate) { el.classList.add("te-nofx"); return; }
     [].forEach.call(el.querySelectorAll(".te-line"), function (line, i) {
       onView(line, amount, function () {
-        var x = function (v) { return "translateX(" + v + "%)"; }, d = i * stagger * 1000;
         line.querySelector(".te-b1").animate([
-          { transform: x(-100), offset: 0, easing: EASE }, { transform: x(0), offset: .25, easing: EASE },
-          { transform: x(0), offset: .8, easing: EASE }, { transform: x(100), offset: 1 }
-        ], { duration: dur, delay: d, fill: "forwards" });
-        line.querySelector(".te-b2").animate([
-          { transform: x(-100), offset: 0, easing: EASE }, { transform: x(-100), offset: .15, easing: EASE },
-          { transform: x(0), offset: .4, easing: EASE }, { transform: x(0), offset: .6, easing: EASE },
-          { transform: x(100), offset: .82, easing: EASE }, { transform: x(100), offset: 1 }
-        ], { duration: dur, delay: d, fill: "forwards" });
+          { transform: "translateX(-100%)" }, { transform: "translateX(100%)" }
+        ], { duration: dur, delay: i * stagger * 1000, easing: EASE, fill: "forwards" });
       });
     });
   }

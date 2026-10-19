@@ -117,63 +117,53 @@
   wireAccordion('.acc-q', '.acc-item');
   wireAccordion('.faq-q', '.faq-item');
 
-  /* ---------- 5. Tab groups + patient carousel ---------- */
+  /* ---------- 5. Parts of the treatment + patient carousel ---------- */
 
-  /* a) parts of the treatment */
-  var FEATURES = [
-    ['How the pieces work together.',
-     'Implants sit in the jawbone and support a connected set of replacement teeth. The implants, your new teeth and your bite need to be planned together \u2014 not as separate parts.',
-     'assets/img/step-2.webp', 'A connected full-arch restoration supported by implants', true],
-    ['The implant.',
-     'Titanium dental implants are placed in the jawbone to support the connected replacement teeth. During healing, the surrounding bone integrates with the implants to provide a stable foundation.',
-     'assets/img/fan-fixture.webp', 'A single titanium implant seated in the jawbone'],
-    ['A connected set of teeth.',
-     'The replacement teeth are made as one connected full-arch restoration. High-strength zirconia is used for its strength, durability and natural appearance.',
-     'assets/img/step-4.webp', 'A connected full arch of replacement teeth'],
-    ['What does \u201cX\u201d mean?',
-     'The \u201cX\u201d refers to the number of implants used to support the full arch. Commonly, four or six implants may be used, depending on the individual treatment plan.',
-     'assets/img/hero.jpg', 'A full-arch bridge supported by multiple implants']
-  ];
+  /* a) the picture follows the card you have scrolled to, and the rule under it
+        fills across the section. One read pass, then one write pass. */
+  (function () {
+    var ex = document.querySelector('[data-ex]');
+    if (!ex) return;
+    var cards = [].slice.call(ex.querySelectorAll('.ex-card'));
+    var slides = [].slice.call(ex.querySelectorAll('.ex-slide'));
+    var bar = ex.querySelector('.ex-bar i');
+    if (cards.length < 2 || cards.length !== slides.length) return;
+    var cur = 0, queued = false, near = false;
 
-  function wireTabs(btnSel, data, els, onIndex) {
-    var btns = [].slice.call(document.querySelectorAll(btnSel));
-    if (!btns.length || !els.img) return;
-    btns.forEach(function (btn, i) {
-      btn.addEventListener('click', function () {
-        if (btn.classList.contains('is-on')) return;
-        btns.forEach(function (b) { b.classList.remove('is-on'); b.setAttribute('aria-selected', 'false'); });
-        btn.classList.add('is-on'); btn.setAttribute('aria-selected', 'true');
-        var d = data[i];
-        /* fade out, swap, fade back in — a crossfade reads calmer than a jump */
-        els.media.classList.add('swap'); els.copy.classList.add('swap');
-        setTimeout(function () {
-          els.title.textContent = d[0];
-          els.desc.textContent = d[1];
-          var vid = document.getElementById('featVid');
-          if (vid && els.img.id === 'featImg') {
-            /* the clinic's clip is only 412x224, so it is shown here at close to
-               its own size rather than blown up across the hero */
-            var useVideo = !!d[4];
-            vid.hidden = !useVideo;
-            els.img.hidden = useVideo;
-            if (useVideo) { vid.play().catch(function () {}); } else { vid.pause(); }
-          }
-          els.img.src = d[2];
-          els.img.alt = d[3];
-          if (onIndex) onIndex(i);
-          els.media.classList.remove('swap'); els.copy.classList.remove('swap');
-        }, 300);
+    function show(i) {
+      if (i === cur) return;
+      cur = i;
+      slides.forEach(function (sl, k) {
+        sl.classList.toggle('is-on', k === i);
+        var v = sl.querySelector('video');
+        if (v) { if (k === i) { v.play().catch(function () {}); } else { v.pause(); } }
       });
-    });
-  }
+      cards.forEach(function (c, k) { c.classList.toggle('is-on', k === i); });
+    }
 
-  wireTabs('.feat-tab', FEATURES, {
-    img: document.getElementById('featImg'),
-    title: document.getElementById('featTitle'),
-    desc: document.getElementById('featDesc'),
-    media: document.querySelector('.feat-media'),
-    copy: document.querySelector('.feat-copy')
-  });
+    function tick() {
+      queued = false;
+      var mark = window.innerHeight * 0.42;
+      var rects = cards.map(function (c) { return c.getBoundingClientRect(); });   /* read */
+      var i = 0;
+      for (var k = 0; k < rects.length; k++) { if (rects[k].top <= mark) i = k; }
+      var first = rects[0].top, last = rects[rects.length - 1].bottom;
+      var span = Math.max(1, last - first);
+      var p = Math.min(1, Math.max(0, (mark - first) / span));
+      show(i);                                                                      /* write */
+      if (bar) bar.style.transform = 'translateX(' + ((p - 1) * 100).toFixed(2) + '%)';
+    }
+    function onScroll() { if (near && !queued) { queued = true; requestAnimationFrame(tick); } }
+
+    new IntersectionObserver(function (es) {
+      near = es[0].isIntersecting;
+      if (near) onScroll();
+    }, { rootMargin: '300px 0px' }).observe(ex);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    tick();
+  })();
 
   /* c) patient carousel */
   (function () {

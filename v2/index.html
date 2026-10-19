@@ -138,29 +138,42 @@
     </div>
     <p class="about-statement reveal" style="--d:.2s" data-reveal-text>All-on-X is a full-arch dental implant solution designed to replace all the teeth in the upper or lower jaw with a connected row of fixed replacement teeth supported by several dental implants. Rather than using one implant for every missing tooth, the implants are carefully planned to support the entire arch.</p>
 
-    <!-- feature tabs -->
-    <div class="feat reveal">
-      <div class="feat-side">
-        <span class="kicker" data-badge>The parts of the treatment</span>
-        <div class="feat-tabs" role="tablist" aria-label="Parts of the treatment">
-          <button class="feat-tab is-on" role="tab" aria-selected="true" data-feature="0"><span class="mono">00</span>The complete picture</button>
-          <button class="feat-tab" role="tab" aria-selected="false" data-feature="1"><span class="mono">01</span>The implant</button>
-          <button class="feat-tab" role="tab" aria-selected="false" data-feature="2"><span class="mono">02</span>The replacement teeth</button>
-          <button class="feat-tab" role="tab" aria-selected="false" data-feature="3"><span class="mono">03</span>The meaning of &ldquo;X&rdquo;</button>
+    <!-- the parts of the treatment: the picture follows the card you are reading -->
+    <div class="ex" data-ex>
+      <div class="ex-left">
+        <div class="ex-media">
+          <div class="ex-slide is-on"><video src="assets/img/allonx.mp4" autoplay muted loop playsinline aria-label="How an All-on-X bridge is supported by implants"></video></div>
+          <div class="ex-slide"><img src="assets/img/fan-fixture.webp" alt="A single titanium implant seated in the jawbone" loading="lazy"></div>
+          <div class="ex-slide"><img src="assets/img/step-4.webp" alt="A connected full arch of replacement teeth" loading="lazy"></div>
+          <div class="ex-slide"><img src="assets/img/hero.jpg" alt="A full-arch bridge supported by multiple implants" loading="lazy"></div>
         </div>
-        <a class="btn btn-light" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener"><i>&#8599;</i>Ask about suitability</a>
+        <div class="ex-bar"><i></i></div>
       </div>
-
-      <div class="feat-panel">
-        <div class="feat-media">
-          <video id="featVid" src="assets/img/allonx.mp4" autoplay muted loop playsinline aria-label="How an All-on-X bridge is supported by implants"></video>
-          <img id="featImg" src="assets/img/step-2.webp" alt="A connected full-arch restoration supported by implants" hidden>
-        </div>
-        <div class="feat-copy">
-          <h3 id="featTitle">How the pieces work together.</h3>
-          <p id="featDesc">Implants sit in the jawbone and support a connected set of replacement teeth. The implants, your new teeth and your bite need to be planned together &mdash; not as separate parts.</p>
-        </div>
+      <div class="ex-cards">
+        <article class="ex-card is-on" style="--i:0">
+          <div class="ex-n"><span>01</span><i></i></div>
+          <h3>How the pieces work together.</h3>
+          <p>Implants sit in the jawbone and support a connected set of replacement teeth. The implants, your new teeth and your bite need to be planned together &mdash; not as separate parts.</p>
+        </article>
+        <article class="ex-card" style="--i:1">
+          <div class="ex-n"><span>02</span><i></i></div>
+          <h3>The implant.</h3>
+          <p>Titanium dental implants are placed in the jawbone to support the connected replacement teeth. During healing, the surrounding bone integrates with the implants to provide a stable foundation.</p>
+        </article>
+        <article class="ex-card" style="--i:2">
+          <div class="ex-n"><span>03</span><i></i></div>
+          <h3>A connected set of teeth.</h3>
+          <p>The replacement teeth are made as one connected full-arch restoration. High-strength zirconia is used for its strength, durability and natural appearance.</p>
+        </article>
+        <article class="ex-card" style="--i:3">
+          <div class="ex-n"><span>04</span><i></i></div>
+          <h3>What does &ldquo;X&rdquo; mean?</h3>
+          <p>The &ldquo;X&rdquo; refers to the number of implants used to support the full arch. Commonly, four or six implants may be used, depending on the individual treatment plan.</p>
+        </article>
       </div>
+    </div>
+    <div class="ex-foot reveal">
+      <a class="btn btn-light" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener"><i>&#8599;</i>Ask about suitability</a>
     </div>
 
     <!-- benefits -->
@@ -189,11 +202,11 @@
     <div class="pcar reveal" data-carousel>
       <div class="pcar-track" data-ptrack>
         <figure class="pslide">
-          <img src="assets/img/case-1.jpg" alt="An Esteem Dental patient before and after All-on-X treatment" loading="lazy">
+          <div class="pmedia"><img src="assets/img/case-1.jpg" alt="An Esteem Dental patient before and after All-on-X treatment" loading="lazy"></div>
           <figcaption>Actual <span class="nb">All-on-X</span> patient treated at Esteem Dental Clinic, Selangor, Malaysia.</figcaption>
         </figure>
         <figure class="pslide">
-          <img src="assets/img/case-2.jpg" alt="Before and after view of a treated arch" loading="lazy">
+          <div class="pmedia"><img src="assets/img/case-2.jpg" alt="Before and after view of a treated arch" loading="lazy"></div>
           <figcaption>The same arch before and after treatment. Outcomes vary between patients.</figcaption>
         </figure>
       </div>
@@ -325,8 +338,8 @@
   <div class="container">
     <div class="cta-inner">
       <div class="cta-copy">
-        <span class="eyebrow light" data-badge>A conversation about your options</span>
-        <h2 data-wipe data-wipe-stagger="0.14">Considering <span class="nb">All-on-X</span>?</h2>
+        <span class="eyebrow light reveal">A conversation about your options</span>
+        <h2 class="reveal" style="--d:.1s">Considering <span class="nb">All-on-X</span>?</h2>
         <p class="reveal" style="--d:.2s">A consultation can help you understand the treatment, suitability and alternatives, with no obligation to proceed with surgery.</p>
         <div class="head-actions reveal" style="--d:.3s">
           <a class="btn btn-onBrand" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener"><i>&#8599;</i>Enquire with Esteem</a>

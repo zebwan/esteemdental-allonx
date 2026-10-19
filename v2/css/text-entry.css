@@ -14,8 +14,14 @@
 .te-line { position: relative; display: block; max-width: 100%; overflow: hidden; padding-bottom: .1771em; }
 .te-text { position: relative; z-index: 1; display: block; }
 .te-line i { position: absolute; inset: 0; transform: translateX(-100%); }
+/* the bar, and riding along just to its right, the cover that still hides the
+   rest of the line. One transform moves both, so they stay in step. */
 .te-line .te-b1 { z-index: 2; background: var(--te-bar1); }
-.te-line .te-b2 { z-index: 3; background: var(--te-bar2); }
+.te-line .te-b1::after {
+  content: ""; position: absolute; left: 100%; top: 0; width: 400%; height: 100%;
+  background: var(--te-bar2);
+}
+.te-nofx .te-line i { display: none; }
 
 /* ---- badge: <span data-badge>Line one<br>Line two</span> */
 [data-badge] { display: inline-flex; flex-direction: column; align-items: flex-start; }
