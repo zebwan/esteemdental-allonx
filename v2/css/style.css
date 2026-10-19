@@ -566,9 +566,9 @@ section.tint{ background:var(--cream-2); }
 .kicker{ display:inline-block; font-size:13px; line-height:1.3; letter-spacing:0;
   font-weight:600; color:var(--brown-mid); margin-bottom:16px; }
 
-.ex{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; margin-top:10px; }
+.ex{ --ex-h:430px; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; margin-top:10px; }
 .ex-left{
-  position:sticky; top:96px; height:580px;
+  position:sticky; top:96px; height:var(--ex-h);
   display:flex; flex-direction:column; gap:20px;
   background:var(--surface); border-radius:22px; padding:26px;
   box-shadow:var(--lift);
@@ -579,9 +579,10 @@ section.tint{ background:var(--cream-2); }
   opacity:0; transition:opacity .55s var(--ease);
 }
 .ex-slide.is-on{ opacity:1; }
-/* contained, never blown up: the clinic's part images are small files */
+/* contained: the clinic's part files are small, so they fill the width of the
+   panel at most - about 1.25x on the renders, and never cropped */
 .ex-slide img,.ex-slide video{
-  max-width:100%; max-height:100%; width:auto; height:auto;
+  width:100%; height:auto; max-width:100%; max-height:100%;
   border-radius:14px; display:block;
 }
 .ex-bar{ position:relative; flex:0 0 auto; height:2px; border-radius:10px;
@@ -589,13 +590,25 @@ section.tint{ background:var(--cream-2); }
 .ex-bar i{ position:absolute; inset:0; background:var(--brown);
   transform:translateX(-100%); will-change:transform; }
 
-.ex-cards{ display:flex; flex-direction:column; gap:20px; }
+.ex-cards{ display:flex; flex-direction:column; gap:22px; }
+/* the cards stack on each other as you scroll, each resting 12px lower than
+   the one before. They are all one height so a short card can never leave the
+   one underneath showing below it. */
 .ex-card{
+  position:sticky; top:calc(96px + var(--i) * 12px);
+  min-height:var(--ex-h);
+  display:flex; flex-direction:column;
   background:var(--surface); border-radius:22px; padding:28px 26px;
   box-shadow:var(--lift);
-  transition:box-shadow .5s var(--ease), background-color .5s var(--ease);
+  transition:box-shadow .5s var(--ease);
 }
 .ex-card.is-on{ box-shadow:var(--lift-hi); }
+.ex-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:26px; }
+.ex-tags span{
+  font-size:12px; line-height:1; color:var(--brown-mid);
+  padding:10px 14px; border-radius:1000px;
+  border:1px solid var(--line); background:var(--cream-2);
+}
 .ex-n{ display:flex; align-items:center; gap:12px; margin-bottom:22px; }
 .ex-n span{ font-size:14px; font-weight:600; color:var(--muted);
   font-variant-numeric:tabular-nums; transition:color .5s var(--ease); }
@@ -789,12 +802,14 @@ footer{
   .head-row{ flex-direction:column; align-items:flex-start; gap:20px; }
   .head-aside{ max-width:none; }
   .sui-grid{ grid-template-columns:1fr; gap:16px; margin-top:34px; }
-  .ex{ grid-template-columns:1fr; gap:18px; }
-  .ex-left{ top:88px; height:min(46vh, 340px); padding:18px; border-radius:18px; gap:14px; }
+  .ex{ --ex-h:330px; grid-template-columns:1fr; gap:16px; }
+  .ex-left{ top:88px; height:min(32vh, 250px); padding:18px; border-radius:18px; gap:14px; }
   .ex-cards{ gap:16px; }
-  .ex-card{ padding:22px 20px; border-radius:18px; }
+  /* stacked under the picture, so the sticky point clears it */
+  .ex-card{ top:calc(min(32vh, 250px) + 104px + var(--i) * 10px); padding:22px 20px; border-radius:18px; }
   .ex-card h3{ font-size:22px; }
   .ex-n{ margin-bottom:16px; }
+  .ex-tags{ padding-top:20px; }
   .ex-foot{ margin-top:24px; }
   .ben-grid{ grid-template-columns:1fr; gap:14px; margin-top:32px; }
   .stack{ --stack-top:88px; --stack-step:12px; margin-top:34px; gap:20px; }
@@ -811,10 +826,12 @@ footer{
 }
 
 @media (max-width:809.98px){
-  .ex-left{ top:78px; height:min(40vh, 250px); padding:14px; border-radius:16px; gap:12px; }
-  .ex-card{ padding:20px 18px; }
+  .ex{ --ex-h:330px; }
+  .ex-left{ top:78px; height:min(30vh, 210px); padding:14px; border-radius:16px; gap:12px; }
+  .ex-card{ top:calc(min(30vh, 210px) + 92px + var(--i) * 8px); padding:20px 18px; }
   .ex-card h3{ font-size:20px; }
   .ex-card p{ font-size:14px; line-height:23px; }
+  .ex-tags span{ font-size:11px; padding:8px 12px; }
   .stack{ --stack-top:84px; --stack-step:10px; margin-top:30px; gap:18px; }
   /* stacked in one column every card has to be the same height, or a card with
      shorter copy would leave the one underneath showing below it. The card gets

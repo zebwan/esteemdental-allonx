@@ -124,11 +124,16 @@
   (function () {
     var ex = document.querySelector('[data-ex]');
     if (!ex) return;
+    var wrap = ex.querySelector('.ex-cards');
     var cards = [].slice.call(ex.querySelectorAll('.ex-card'));
     var slides = [].slice.call(ex.querySelectorAll('.ex-slide'));
     var bar = ex.querySelector('.ex-bar i');
     if (cards.length < 2 || cards.length !== slides.length) return;
-    var cur = 0, queued = false, near = false;
+    var cur = 0, sticks = [];
+
+    function measure() {
+      sticks = cards.map(function (c) { return parseFloat(getComputedStyle(c).top) || 0; });
+    }
 
     function show(i) {
       if (i === cur) return;
@@ -142,26 +147,30 @@
     }
 
     function tick() {
-      queued = false;
-      var mark = window.innerHeight * 0.42;
-      var rects = cards.map(function (c) { return c.getBoundingClientRect(); });   /* read */
+      var box = ex.getBoundingClientRect();                       /* read: cheap gate */
+      if (box.bottom < -300 || box.top > window.innerHeight + 300) return;
+      var tops = cards.map(function (c) { return c.getBoundingClientRect().top; });
+      var wr = wrap.getBoundingClientRect();
+      var h = cards[0].offsetHeight || 1;
+
+      /* the card on top of the pile is the last one that has reached its own
+         sticky position - the cards all share the top of the stage once stuck,
+         so a fixed line down the viewport cannot tell them apart */
       var i = 0;
-      for (var k = 0; k < rects.length; k++) { if (rects[k].top <= mark) i = k; }
-      var first = rects[0].top, last = rects[rects.length - 1].bottom;
-      var span = Math.max(1, last - first);
-      var p = Math.min(1, Math.max(0, (mark - first) / span));
-      show(i);                                                                      /* write */
+      for (var k = 0; k < tops.length; k++) { if (tops[k] <= sticks[k] + 40) i = k; }
+      var travel = Math.max(1, wr.height - h);
+      var p = Math.min(1, Math.max(0, (sticks[0] - wr.top) / travel));
+
+      show(i);                                                     /* write */
       if (bar) bar.style.transform = 'translateX(' + ((p - 1) * 100).toFixed(2) + '%)';
     }
-    function onScroll() { if (near && !queued) { queued = true; requestAnimationFrame(tick); } }
-
-    new IntersectionObserver(function (es) {
-      near = es[0].isIntersecting;
-      if (near) onScroll();
-    }, { rootMargin: '300px 0px' }).observe(ex);
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    /* scroll already fires at most once a frame, and the handler reads before it
+       writes, so there is nothing to gain from deferring it to rAF - and a frame
+       that never arrives (a background tab) would strand the whole effect */
+    measure();
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', function () { measure(); tick(); }, { passive: true });
+    window.addEventListener('load', function () { measure(); tick(); });
     tick();
   })();
 
@@ -237,11 +246,10 @@
     if (!stack || reduced) return;
     var cards = [].slice.call(stack.querySelectorAll('.stack-card'));
     if (cards.length < 2) return;
-    var near = false, queued = false;
-
     function tick() {
-      queued = false;
-      var tops = cards.map(function (c) { return c.getBoundingClientRect().top; });  /* read */
+      var box = stack.getBoundingClientRect();                                       /* read */
+      if (box.bottom < -300 || box.top > window.innerHeight + 300) return;
+      var tops = cards.map(function (c) { return c.getBoundingClientRect().top; });
       var h = cards[0].offsetHeight || 1;
       for (var i = 0; i < cards.length - 1; i++) {                                   /* write */
         var gap = tops[i + 1] - tops[i];
@@ -249,16 +257,9 @@
         cards[i].style.transform = p ? 'scale(' + (1 - p * 0.05).toFixed(4) + ')' : '';
       }
     }
-    function onScroll() { if (near && !queued) { queued = true; requestAnimationFrame(tick); } }
-
-    new IntersectionObserver(function (es) {
-      near = es[0].isIntersecting;
-      if (near) onScroll();
-      else cards.forEach(function (c) { c.style.transform = ''; });
-    }, { rootMargin: '300px 0px' }).observe(stack);
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick, { passive: true });
+    tick();
   })();
 
   /* ---------- 5b. Hero slider ---------- */
