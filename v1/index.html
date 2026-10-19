@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* an /index.html link tidies itself up in the address bar, no reload */
+if(location.pathname.endsWith("/index.html"))history.replaceState(null,"",location.pathname.slice(0,-10)+location.search+location.hash);</script>
 <title>All-on-X Dental Implants in Seri Kembangan | Esteem Dental Clinic</title>
 <meta name="description" content="All-on-X full-arch dental implants at Esteem Dental Clinic, Seri Kembangan, Selangor. Fixed teeth on 4 to 6 implants, digitally planned with computer-guided surgery and an in-house lab. Book a consultation.">
 <link rel="icon" href="assets/logo-black.png">

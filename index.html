@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* an /index.html link tidies itself up in the address bar, no reload */
+if(location.pathname.endsWith("/index.html"))history.replaceState(null,"",location.pathname.slice(0,-10)+location.search+location.hash);</script>
 <title>Esteem Dental — All-on-X landing page versions</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="v2/assets/favicon.png">
