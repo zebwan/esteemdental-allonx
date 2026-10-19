@@ -1,5 +1,16 @@
 # Esteem Dental Clinic — All-on-X landing page
 
+```
+index.html   a chooser, so both versions can be opened side by side
+v1/          the build before the brand guide — kept for reference only
+v2/          the current build, on the brand guide   <- review this one
+```
+
+**v1** uses Geist, the earlier cream/brown palette, licensed stock photography
+and a dark hero with white text over a photo.
+**v2** is v1 rebuilt on the Esteem Brand Guide with the clinic's own imagery, a
+light hero and a real-patients section. Everything described below is v2.
+
 A single-page landing site for Esteem Dental Clinic's All-on-X full-arch implant
 treatment. Layout and motion come from the Dentistry X Framer template; the
 palette, typography, logo and imagery come from the client's Brand Guide and
