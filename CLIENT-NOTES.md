@@ -68,6 +68,29 @@ inside the page's scripts, which Google does not reliably read.
 content. That's roughly 400 extra words of indexable copy, and the heading count went
 from 6 sub-headings to 12.
 
+### Every section has its own address
+
+The page address carries no `.html` on the end — it is `/all-on-x/`, not
+`/all-on-x/index.html`. Cleaner to share, and it means the page can be moved or
+rebuilt later without the link breaking.
+
+Each section is also separately linkable, and the links are written in plain words
+rather than internal shorthand:
+
+| Section | Link |
+|---|---|
+| Who may benefit? | `/all-on-x/#who-may-benefit` |
+| How All-on-X works | `/all-on-x/#how-all-on-x-works` |
+| Real patients | `/all-on-x/#real-patients` |
+| Planning & treatment | `/all-on-x/#planning-and-treatment` |
+| Questions to ask | `/all-on-x/#questions-to-ask` |
+| Discuss your options | `/all-on-x/#discuss-your-options` |
+
+Two uses for this. Esteem can send a patient straight to the part that answers their
+question — a WhatsApp reply can link to the questions section rather than the whole
+page. And Google sometimes lists these as "jump to" links under a search result,
+which takes up more of the page and reads as more useful.
+
 ### Housekeeping
 
 Also in place now, none of which the client needs to do anything about: the clinic's
