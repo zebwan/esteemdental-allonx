@@ -36,6 +36,10 @@
   /* spring(stiffness 200, damping 40, mass 1) ≈ this tween */
   --ease: cubic-bezier(.22,.61,.36,1);
   --dur: .9s;
+
+  /* cards rest on a soft shadow and lift a little further on hover */
+  --lift:   0 2px 4px rgba(134,85,67,.045), 0 12px 26px rgba(134,85,67,.07);
+  --lift-hi:0 5px 11px rgba(134,85,67,.06),  0 24px 48px rgba(134,85,67,.14);
 }
 
 /* Lenis (smooth scrolling) — required by the library */
@@ -78,13 +82,14 @@ h4{ font-size:19px; line-height:1.35; }
 p{ margin:0; }
 
 .nb{ white-space:nowrap; }
-.mono{ font-family:'Inter',system-ui,sans-serif; letter-spacing:.06em; }
+.mono{ font-family:'Inter',system-ui,sans-serif; letter-spacing:0; font-weight:600;
+  font-variant-numeric:tabular-nums; }
 
 /* eyebrow pill — template: radius 1000px, 12-13px */
 .eyebrow{
   display:inline-flex; align-items:center; gap:8px;
   align-self:flex-start; width:fit-content; white-space:nowrap;
-  font-size:13px; line-height:1; font-weight:500;
+  font-size:13px; line-height:1; font-weight:600;
   color:var(--brown);
   background:var(--surface);
   border:1px solid var(--line);
@@ -164,8 +169,17 @@ section.tint{ background:var(--cream-2); }
 .nav-links a:hover{ color:var(--brown); }
 .nav-links a::after{ content:''; position:absolute; left:0; bottom:0; height:1px; width:0; background:currentColor; transition:width .4s var(--ease); }
 .nav-links a:hover::after{ width:100%; }
-.nav-cta{ display:flex; align-items:center; gap:12px; }
-.nav-wrap:not(.scrolled) .nav-cta .btn-primary{ background:var(--brown); }
+.nav-cta{ display:flex; align-items:center; gap:18px; }
+/* the client's own header CTA: a rule under the words, not a pill */
+.nav-link-cta{
+  display:inline-flex; align-items:center; gap:20px;
+  font-size:13px; font-weight:600; color:var(--brown);
+  border-bottom:1px solid var(--brown-mid); padding-bottom:9px;
+  transition:gap .4s var(--ease), border-color .4s var(--ease), color .4s var(--ease);
+}
+.nav-link-cta .arr{ font-size:17px; font-weight:400; line-height:1; transition:transform .4s var(--ease); }
+.nav-link-cta:hover{ gap:26px; color:var(--brown-deep); border-color:var(--brown); }
+.nav-link-cta:hover .arr{ transform:translate(3px,3px); }
 /* Menu toggle: a hamburger that becomes a smile when the menu opens.
    No background or border — just the strokes. */
 .burger{
@@ -243,6 +257,10 @@ section.tint{ background:var(--cream-2); }
 .hslide{ position:absolute; inset:0; opacity:0; transition:opacity .9s var(--ease); }
 .hslide.is-on{ opacity:1; }
 .hero-media img,.hero-media video{ width:100%; height:100%; object-fit:cover; display:block; }
+/* both hero photographs are wider than the panel, so hold the part that matters:
+   the front of the arch on the bridge, the smile line on the result */
+.hero-media img[src$="hero.jpg"]{ object-position:50% 54%; }
+.hero-media img[src$="step-5.jpg"]{ object-position:50% 46%; }
 .hdots{ position:absolute; right:18px; bottom:18px; display:flex; gap:7px; z-index:3; }
 .hdot{
   width:8px; height:8px; padding:0; border-radius:50%; cursor:pointer;
@@ -277,10 +295,13 @@ section.tint{ background:var(--cream-2); }
   .hero{ padding:0; min-height:800px; display:flex; align-items:center; }
   .hero > .container{ width:100%; }
   .hero-grid{ grid-template-columns:1fr; gap:0; }
-  .hero-left{ max-width:560px; padding:176px 0 104px; position:relative; z-index:2; }
+  .hero-left{ max-width:560px; padding:158px 0 88px; position:relative; z-index:2; }
+  /* as wide as the text column allows, so the photograph is cropped as little
+     as possible: 50vw is the half the panel could take if the page were not
+     centred, less the 46px that keeps a 56px gap beside the headline */
   .hero-media{
     position:absolute; top:0; right:0; bottom:0;
-    width:46vw; max-width:960px; height:auto;
+    width:min(calc(50vw - 46px), 1000px); max-width:none; height:auto;
     aspect-ratio:auto; border-radius:0 0 0 28px;
   }
   /* the bar now sits over the picture, so give it something to sit on */
@@ -526,12 +547,14 @@ section.tint{ background:var(--cream-2); }
 .head-aside{ max-width:34ch; font-size:15px; line-height:24px; padding-bottom:4px; }
 .sui-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:52px; }
 .sui-card{
-  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  background:var(--surface); border:0; border-radius:18px;
   padding:26px 24px 24px; display:flex; flex-direction:column; gap:12px;
-  transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  box-shadow:var(--lift); will-change:transform;
+  transition:transform .5s var(--ease), box-shadow .5s var(--ease);
 }
-.sui-card:hover{ transform:translateY(-5px); box-shadow:0 18px 40px rgba(134,85,67,.10); }
-.sui-card .n{ font-size:12px; color:var(--muted); }
+.sui-card:hover{ transform:translateY(-9px) rotate(-.75deg); box-shadow:var(--lift-hi); }
+.sui-card:nth-child(even):hover{ transform:translateY(-9px) rotate(.75deg); }
+.sui-card .n{ font-size:13px; color:var(--brown-mid); }
 .sui-card h3{ font-size:21px; }
 .sui-card p{ font-size:14px; line-height:22px; }
 .sui-media{ margin-top:auto; padding-top:18px; border-radius:12px; overflow:hidden; }
@@ -540,7 +563,8 @@ section.tint{ background:var(--cream-2); }
 /* ============================================================
    FEATURE TABS — the parts of the treatment
    ============================================================ */
-.kicker{ display:block; font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
+.kicker{ display:inline-block; font-size:13px; line-height:1.3; letter-spacing:0;
+  font-weight:600; color:var(--brown-mid); margin-bottom:16px; }
 .feat{ display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; align-items:stretch; margin-top:10px; }
 .feat-side{ display:flex; flex-direction:column; align-items:flex-start; }
 .feat-tabs{ display:flex; flex-direction:column; width:100%; margin-bottom:24px; }
@@ -574,12 +598,14 @@ section.tint{ background:var(--cream-2); }
    ============================================================ */
 .ben-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:44px; }
 .ben-card{
-  background:var(--cream-2); border-radius:16px; padding:26px 24px;
+  background:var(--surface); border:0; border-radius:18px; padding:26px 24px;
   display:flex; flex-direction:column; gap:10px;
-  transition:background-color .4s var(--ease);
+  box-shadow:var(--lift); will-change:transform;
+  transition:transform .5s var(--ease), box-shadow .5s var(--ease);
 }
-.ben-card:hover{ background:var(--cream-3); }
-.ben-card .n{ font-size:12px; color:var(--muted); }
+.ben-card:hover{ transform:translateY(-9px) rotate(.7deg); box-shadow:var(--lift-hi); }
+.ben-card:nth-child(odd):hover{ transform:translateY(-9px) rotate(-.7deg); }
+.ben-card .n{ font-size:13px; color:var(--brown-mid); }
 .ben-card h4{ font-size:19px; }
 .ben-card p{ font-size:14px; line-height:22px; }
 
@@ -601,7 +627,8 @@ section.tint{ background:var(--cream-2); }
 }
 .pslide figcaption{ margin-top:16px; text-align:center; font-size:14px; line-height:21px; color:var(--muted); }
 .pcar-ui{ display:flex; align-items:center; justify-content:center; gap:20px; margin-top:26px; }
-.pcar-count{ font-size:13px; color:var(--muted); letter-spacing:.08em; }
+.pcar-count{ font-size:13px; color:var(--muted); letter-spacing:0; font-weight:600;
+  font-variant-numeric:tabular-nums; }
 
 /* ============================================================
    JOURNEY STEPS
@@ -693,13 +720,18 @@ footer{
 }
 .reveal.in{ opacity:1; transform:none; }
 .reveal-fade{ opacity:0; transition:opacity var(--dur) var(--ease); transition-delay:var(--d,0s); }
+/* cards arrive from the right. A keyframe, not a transition, so the finished
+   state leaves `transform` free for the hover twist. */
+.slide-r:not(.in){ opacity:0; }
+.slide-r.in{ animation:slideR var(--dur) var(--ease) var(--d,0s) backwards; }
+@keyframes slideR{ from{ opacity:0; transform:translateX(72px); } to{ opacity:1; transform:none; } }
 .reveal-fade.in{ opacity:1; }
 .pop{ transform:scale(0); transition:transform .7s var(--ease); transition-delay:var(--d,0s); }
 .pop.in{ transform:scale(1); }
 .tr-word{ opacity:.4; }
 
 @media (prefers-reduced-motion:reduce){
-  .reveal,.reveal-fade{ opacity:1 !important; transform:none !important; transition:none; }
+  .reveal,.reveal-fade,.slide-r{ opacity:1 !important; transform:none !important; transition:none; animation:none; }
   .pop{ transform:none !important; }
   .tr-word{ opacity:1 !important; }
   .nav-wrap{ transition:none; }
@@ -809,3 +841,49 @@ footer{
 }
 
 @media (min-width:1200px){ .mobile-panel{ display:none; } }
+
+/* ============================================================
+   TEXT ENTRY (SJMC kit) — recoloured for Esteem
+   bar 2 is set to each section's own background so the second
+   sweep erases cleanly instead of leaving a band of colour.
+   ============================================================ */
+:root{
+  --te-bar1: var(--sand);
+  --te-bar2: var(--cream);
+  --te-badge-bg: var(--brown);
+  --te-badge-ink: var(--brown);
+  --te-badge-ink-in: var(--cream);
+}
+section.tint{ --te-bar2: var(--cream-2); }
+.cta-band{
+  --te-bar1: rgba(255,255,255,.34);
+  --te-bar2: var(--brown-alt);
+  --te-badge-bg: #fff;
+  --te-badge-ink: #fff;
+  --te-badge-ink-in: var(--brown);
+}
+
+/* headings keep their own type; the kit only adds the sweep */
+h1 [data-wipe], h2[data-wipe]{ gap:0; }
+.head.center [data-wipe]{ align-items:center; text-align:center; }
+.te-line{ padding-bottom:.08em; }
+
+/* the eyebrow pill IS the badge: the bar fills the whole pill, padding included */
+.eyebrow{ position:relative; overflow:hidden; }
+.eyebrow .te-bl{ padding:0; overflow:visible; }
+.eyebrow .te-bl i{ left:-17px; top:-11px; height:calc(100% + 22px); }
+.eyebrow.te-in .te-bl i{ left:-17px; width:calc(100% + 34px); }
+.kicker{ --te-badge-bg:var(--sand); --te-badge-ink:var(--brown-mid); --te-badge-ink-in:var(--brown); }
+.kicker .te-bl{ padding:0 10px; border-radius:4px; }
+.kicker .te-bl i{ top:-5px; height:calc(100% + 10px); }
+
+/* rolling stat number */
+.hero-card .big[data-count]{ display:inline-flex; }
+
+/* ============================================================
+   NAV CTA — the text link collapses with the links
+   ============================================================ */
+@media (max-width:809.98px){
+  .nav-link-cta{ display:none; }
+  .nav-cta{ gap:0; }
+}

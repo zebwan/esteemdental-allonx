@@ -29,7 +29,7 @@
   if (yr) yr.textContent = new Date().getFullYear();
 
   /* ---------- 1. Scroll reveals ---------- */
-  var revealEls = document.querySelectorAll('.reveal, .reveal-fade, .pop');
+  var revealEls = document.querySelectorAll('.reveal, .reveal-fade, .pop, .slide-r');
   if (reduced) {
     revealEls.forEach(function (el) { el.classList.add('in'); });
   } else {
@@ -123,7 +123,7 @@
   var FEATURES = [
     ['How the pieces work together.',
      'Implants sit in the jawbone and support a connected set of replacement teeth. The implants, your new teeth and your bite need to be planned together \u2014 not as separate parts.',
-     'assets/img/step-2.webp', 'A connected full-arch restoration supported by implants'],
+     'assets/img/step-2.webp', 'A connected full-arch restoration supported by implants', true],
     ['The implant.',
      'Titanium dental implants are placed in the jawbone to support the connected replacement teeth. During healing, the surrounding bone integrates with the implants to provide a stable foundation.',
      'assets/img/fan-fixture.webp', 'A single titanium implant seated in the jawbone'],
@@ -168,6 +168,15 @@
         setTimeout(function () {
           els.title.textContent = d[0];
           els.desc.textContent = d[1];
+          var vid = document.getElementById('featVid');
+          if (vid && els.img.id === 'featImg') {
+            /* the clinic's clip is only 412x224, so it is shown here at close to
+               its own size rather than blown up across the hero */
+            var useVideo = !!d[4];
+            vid.hidden = !useVideo;
+            els.img.hidden = useVideo;
+            if (useVideo) { vid.play().catch(function () {}); } else { vid.pause(); }
+          }
           els.img.src = d[2];
           els.img.alt = d[3];
           if (onIndex) onIndex(i);
@@ -193,7 +202,7 @@
     media: document.querySelector('.steps-media'),
     copy: document.querySelector('.steps-copy')
   }, function (i) {
-    if (stepCount) stepCount.textContent = 'Step 0' + (i + 1) + ' / 0' + STEPS.length;
+    if (stepCount) stepCount.textContent = 'Step ' + (i + 1) + ' of ' + STEPS.length;
   });
 
   /* c) patient carousel */
@@ -206,10 +215,10 @@
     var total = car.querySelector('[data-ptotal]');
     var btns = [].slice.call(car.querySelectorAll('[data-pdir]'));
     var idx = 0;
-    if (total) total.textContent = ('0' + slides.length).slice(-2);
+    if (total) total.textContent = slides.length;
 
     function paint() {
-      if (now) now.textContent = ('0' + (idx + 1)).slice(-2);
+      if (now) now.textContent = idx + 1;
       btns.forEach(function (b) {
         var d = +b.dataset.pdir;
         b.disabled = d < 0 ? idx === 0 : idx === slides.length - 1;

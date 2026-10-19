@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Inter:wght@400;500;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/text-entry.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,14 +20,14 @@
     <div class="container">
       <a class="brand" href="#top" aria-label="Esteem Dental Clinic"><span class="mark"><span class="n">esteem</span><span class="s">dental clinic</span></span></a>
       <div class="nav-links">
-        <a href="#suitability">Suitability</a>
-        <a href="#understand">All-on-X explained</a>
+        <a href="#suitability">Who may benefit?</a>
+        <a href="#understand">How All-on-X works</a>
         <a href="#clinical-result">Real patients</a>
-        <a href="#difference">Your journey</a>
-        <a href="#questions">Questions</a>
+        <a href="#difference">Planning &amp; treatment</a>
+        <a href="#questions">Questions to ask</a>
       </div>
       <div class="nav-cta">
-        <a class="btn btn-primary" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener"><i>&#8599;</i>Enquire</a>
+        <a class="nav-link-cta" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener">Discuss your options<span class="arr" aria-hidden="true">&#8600;</span></a>
         <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
           <svg viewBox="0 0 28 28" aria-hidden="true" focusable="false">
             <g class="bars" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
@@ -43,12 +44,12 @@
     </div>
   </nav>
   <div class="mobile-panel" id="mobilePanel">
-    <a href="#suitability">Suitability</a>
-    <a href="#understand">All-on-X explained</a>
+    <a href="#suitability">Who may benefit?</a>
+    <a href="#understand">How All-on-X works</a>
     <a href="#clinical-result">Real patients</a>
-    <a href="#difference">Your journey</a>
-    <a href="#questions">Questions</a>
-    <a class="btn btn-onBrand" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener"><i>&#8599;</i>Enquire with Esteem</a>
+    <a href="#difference">Planning &amp; treatment</a>
+    <a href="#questions">Questions to ask</a>
+    <a class="btn btn-onBrand" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener"><i>&#8599;</i>Discuss your options</a>
   </div>
 </div>
 
@@ -57,9 +58,9 @@
   <div class="container">
     <div class="hero-grid">
       <div class="hero-left">
-        <span class="eyebrow reveal">Advanced Implant Centre &middot; Seri Kembangan</span>
-        <h1 class="reveal" style="--d:.1s">
-          <span class="h1-main">Considering <span class="nb">All-on-X</span>?<br>Know what matters.</span>
+        <span class="eyebrow" data-badge>Advanced Implant Centre &middot; Seri Kembangan</span>
+        <h1>
+          <span class="h1-main" data-wipe data-wipe-stagger="0.14">Considering <span class="nb">All-on-X</span>?<br>Know what matters.</span>
           <span class="h1-kw">Full-arch dental implants in Seri Kembangan, Selangor</span>
         </h1>
         <p class="hero-body reveal" style="--d:.2s">If you're considering All-on-X, this guide explains who it may be suitable for, what treatment involves, and the important questions to ask before making a decision.</p>
@@ -76,22 +77,18 @@
       </div>
       <div class="hero-media reveal-fade" style="--d:.2s" data-hero>
         <div class="hslide is-on">
-          <video src="assets/img/allonx.mp4" autoplay muted loop playsinline aria-label="How an All-on-X bridge is supported by implants"></video>
-        </div>
-        <div class="hslide">
           <img src="assets/img/hero.jpg" alt="A zirconia full-arch implant bridge" fetchpriority="high">
         </div>
         <div class="hslide">
           <img src="assets/img/step-5.jpg" alt="A finished full-arch restoration in place">
         </div>
         <div class="hero-card">
-          <span class="big">4&ndash;6</span>
+          <span class="big" data-count="4&ndash;6"></span>
           <span class="sub">implants support a full arch</span>
         </div>
         <div class="hdots" role="tablist" aria-label="Hero images">
           <button class="hdot is-on" role="tab" aria-selected="true" aria-label="Image 1"></button>
           <button class="hdot" role="tab" aria-selected="false" aria-label="Image 2"></button>
-          <button class="hdot" role="tab" aria-selected="false" aria-label="Image 3"></button>
         </div>
       </div>
     </div>
@@ -103,27 +100,27 @@
   <div class="container">
     <div class="head-row">
       <div class="head">
-        <span class="eyebrow reveal">Could any of these sound familiar?</span>
-        <h2 class="reveal" style="--d:.1s">When most of the teeth are failing, this may be the way forward.</h2>
+        <span class="eyebrow" data-badge>Could any of these sound familiar?</span>
+        <h2 data-wipe data-wipe-stagger="0.14">When most of the teeth are failing, this may be the way forward.</h2>
       </div>
       <p class="head-aside reveal" style="--d:.2s">A detailed assessment can help determine whether <span class="nb">All-on-X</span> is suitable for your needs, health and treatment goals.</p>
     </div>
 
     <div class="sui-grid">
-      <article class="sui-card reveal">
-        <span class="n mono">01 /</span>
+      <article class="sui-card slide-r">
+        <span class="n mono">01</span>
         <h3>Many missing teeth</h3>
         <p>When most or all teeth in the upper or lower jaw are missing, All-on-X provides a fixed replacement for the missing teeth.</p>
         <div class="sui-media"><img src="assets/img/prob-1.jpg" alt="An arch with most of its teeth missing" loading="lazy"></div>
       </article>
-      <article class="sui-card reveal" style="--d:.1s">
-        <span class="n mono">02 /</span>
+      <article class="sui-card slide-r" style="--d:.1s">
+        <span class="n mono">02</span>
         <h3>Loose dentures</h3>
         <p>When dentures move, rub, or make eating and speaking uncomfortable, All-on-X offers a more stable and fixed option.</p>
         <div class="sui-media"><img src="assets/img/prob-2.jpg" alt="A removable full denture" loading="lazy"></div>
       </article>
-      <article class="sui-card reveal" style="--d:.2s">
-        <span class="n mono">03 /</span>
+      <article class="sui-card slide-r" style="--d:.2s">
+        <span class="n mono">03</span>
         <h3>Multiple failing teeth</h3>
         <p>When most teeth are badly damaged, loose or keep causing problems, it may be time to consider whether saving or replacing them is the better long-term option.</p>
         <div class="sui-media"><img src="assets/img/prob-3.jpg" alt="Teeth badly broken down by decay" loading="lazy"></div>
@@ -136,15 +133,15 @@
 <section id="understand">
   <div class="container">
     <div class="head">
-      <span class="eyebrow reveal">01 &mdash; All-on-X explained</span>
-      <h2 class="reveal" style="--d:.1s">Fixed replacement teeth.<br>Planned around you.</h2>
+      <span class="eyebrow" data-badge>All-on-X explained</span>
+      <h2 data-wipe data-wipe-stagger="0.14">Fixed replacement teeth.<br>Planned around you.</h2>
     </div>
     <p class="about-statement reveal" style="--d:.2s" data-reveal-text>All-on-X is a full-arch dental implant solution designed to replace all the teeth in the upper or lower jaw with a connected row of fixed replacement teeth supported by several dental implants. Rather than using one implant for every missing tooth, the implants are carefully planned to support the entire arch.</p>
 
     <!-- feature tabs -->
     <div class="feat reveal">
       <div class="feat-side">
-        <span class="kicker mono">The parts of the treatment</span>
+        <span class="kicker" data-badge>The parts of the treatment</span>
         <div class="feat-tabs" role="tablist" aria-label="Parts of the treatment">
           <button class="feat-tab is-on" role="tab" aria-selected="true" data-feature="0"><span class="mono">00</span>The complete picture</button>
           <button class="feat-tab" role="tab" aria-selected="false" data-feature="1"><span class="mono">01</span>The implant</button>
@@ -155,7 +152,10 @@
       </div>
 
       <div class="feat-panel">
-        <div class="feat-media"><img id="featImg" src="assets/img/step-2.webp" alt="A connected full-arch restoration supported by implants"></div>
+        <div class="feat-media">
+          <video id="featVid" src="assets/img/allonx.mp4" autoplay muted loop playsinline aria-label="How an All-on-X bridge is supported by implants"></video>
+          <img id="featImg" src="assets/img/step-2.webp" alt="A connected full-arch restoration supported by implants" hidden>
+        </div>
         <div class="feat-copy">
           <h3 id="featTitle">How the pieces work together.</h3>
           <p id="featDesc">Implants sit in the jawbone and support a connected set of replacement teeth. The implants, your new teeth and your bite need to be planned together &mdash; not as separate parts.</p>
@@ -165,15 +165,15 @@
 
     <!-- benefits -->
     <div class="head" style="margin-top:84px">
-      <span class="eyebrow reveal">What may change</span>
-      <h2 class="reveal" style="--d:.1s">How could fixed teeth make everyday life easier?</h2>
+      <span class="eyebrow" data-badge>What may change</span>
+      <h2 data-wipe data-wipe-stagger="0.14">How could fixed teeth make everyday life easier?</h2>
       <p class="reveal" style="--d:.2s">For suitable patients, a fixed full-arch restoration may offer practical benefits. The result depends on your oral health, the design, healing and ongoing care.</p>
     </div>
     <div class="ben-grid">
-      <article class="ben-card reveal"><span class="n mono">01</span><h4>Eat with greater comfort</h4><p>A stable, fixed restoration makes everyday chewing more comfortable than with a loose or uncomfortable denture.</p></article>
-      <article class="ben-card reveal" style="--d:.1s"><span class="n mono">02</span><h4>Greater stability</h4><p>Supported by dental implants, the teeth remain fixed in place and are not removed each day like a removable denture.</p></article>
-      <article class="ben-card reveal" style="--d:.2s"><span class="n mono">03</span><h4>Speak with greater confidence</h4><p>With less movement than a loose denture, a stable, fixed restoration helps you feel more comfortable and confident when speaking and socialising.</p></article>
-      <article class="ben-card reveal" style="--d:.3s"><span class="n mono">04</span><h4>A smile designed for you</h4><p>The shape, arrangement and appearance of your replacement teeth can be planned around your face, smile, speech and bite.</p></article>
+      <article class="ben-card slide-r"><span class="n mono">01</span><h4>Eat with greater comfort</h4><p>A stable, fixed restoration makes everyday chewing more comfortable than with a loose or uncomfortable denture.</p></article>
+      <article class="ben-card slide-r" style="--d:.1s"><span class="n mono">02</span><h4>Greater stability</h4><p>Supported by dental implants, the teeth remain fixed in place and are not removed each day like a removable denture.</p></article>
+      <article class="ben-card slide-r" style="--d:.2s"><span class="n mono">03</span><h4>Speak with greater confidence</h4><p>With less movement than a loose denture, a stable, fixed restoration helps you feel more comfortable and confident when speaking and socialising.</p></article>
+      <article class="ben-card slide-r" style="--d:.3s"><span class="n mono">04</span><h4>A smile designed for you</h4><p>The shape, arrangement and appearance of your replacement teeth can be planned around your face, smile, speech and bite.</p></article>
     </div>
   </div>
 </section>
@@ -182,8 +182,8 @@
 <section class="tint" id="clinical-result">
   <div class="container">
     <div class="head center">
-      <span class="eyebrow reveal">Real patient results</span>
-      <h2 class="reveal" style="--d:.1s">Real patients.<br>Personalised treatment.</h2>
+      <span class="eyebrow" data-badge>Real patient results</span>
+      <h2 data-wipe data-wipe-stagger="0.14">Real patients.<br>Personalised treatment.</h2>
     </div>
 
     <div class="pcar reveal" data-carousel>
@@ -198,7 +198,7 @@
         </figure>
       </div>
       <div class="pcar-ui">
-        <span class="pcar-count mono"><span data-pnow>01</span> / <span data-ptotal>02</span></span>
+        <span class="pcar-count mono"><span data-pnow>1</span> / <span data-ptotal>2</span></span>
         <div class="sld-nav">
           <button class="sld-btn" data-pdir="-1" aria-label="Previous case">&#8592;</button>
           <button class="sld-btn" data-pdir="1" aria-label="Next case">&#8594;</button>
@@ -213,8 +213,8 @@
   <div class="container">
     <div class="head-row">
       <div class="head">
-        <span class="eyebrow reveal">A considered approach</span>
-        <h2 class="reveal" style="--d:.1s">What happens from planning to final teeth?</h2>
+        <span class="eyebrow" data-badge>A considered approach</span>
+        <h2 data-wipe data-wipe-stagger="0.14">What happens from planning to final teeth?</h2>
       </div>
       <p class="head-aside reveal" style="--d:.2s"><span class="nb">All-on-X</span> is more than a single procedure. It is a carefully planned journey from your first assessment and implant placement to healing and your final teeth.</p>
     </div>
@@ -231,7 +231,7 @@
       <div class="steps-panel">
         <div class="steps-media"><img id="stepImg" src="assets/img/step-1.jpg" alt="A 3D scan reviewed for digital planning"></div>
         <div class="steps-copy">
-          <span class="kicker mono" id="stepCount">Step 01 / 05</span>
+          <span class="kicker" id="stepCount">Step 1 of 5</span>
           <h3 id="stepTitle">Understand your starting point.</h3>
           <p id="stepDesc">A clinical examination, CBCT scan and digital scans provide a detailed view of your teeth, gums, jawbone and bite. These records allow the implant positions and replacement teeth to be planned together before surgery, with your anatomy, function and final restoration considered from the beginning.</p>
         </div>
@@ -244,8 +244,8 @@
 <section class="tint" id="questions">
   <div class="container">
     <div class="head center">
-      <span class="eyebrow reveal">Frequently asked questions</span>
-      <h2 class="reveal" style="--d:.1s">Questions worth asking<br>before you decide.</h2>
+      <span class="eyebrow" data-badge>Frequently asked questions</span>
+      <h2 data-wipe data-wipe-stagger="0.14">Questions worth asking<br>before you decide.</h2>
       <p class="reveal" style="--d:.15s">If you're considering All-on-X, these are some important questions to discuss with your dentist.</p>
     </div>
 
@@ -291,8 +291,8 @@
   <div class="container">
     <div class="cta-inner">
       <div class="cta-copy">
-        <span class="eyebrow light reveal">A conversation about your options</span>
-        <h2 class="reveal" style="--d:.1s">Considering <span class="nb">All-on-X</span>?</h2>
+        <span class="eyebrow light" data-badge>A conversation about your options</span>
+        <h2 data-wipe data-wipe-stagger="0.14">Considering <span class="nb">All-on-X</span>?</h2>
         <p class="reveal" style="--d:.2s">A consultation can help you understand the treatment, suitability and alternatives, with no obligation to proceed with surgery.</p>
         <div class="head-actions reveal" style="--d:.3s">
           <a class="btn btn-onBrand" href="https://www.esteemdentalclinic.com/find-us" target="_blank" rel="noopener"><i>&#8599;</i>Enquire with Esteem</a>
@@ -321,15 +321,15 @@
       </div>
       <div class="foot-col">
         <strong>On this page</strong>
-        <a href="#suitability">Suitability</a>
-        <a href="#understand">All-on-X explained</a>
+        <a href="#suitability">Who may benefit?</a>
+        <a href="#understand">How All-on-X works</a>
         <a href="#clinical-result">Real patients</a>
       </div>
       <div class="foot-col">
         <strong>Treatment</strong>
-        <a href="#difference">Your journey</a>
-        <a href="#questions">Questions</a>
-        <a href="#start">Enquire</a>
+        <a href="#difference">Planning &amp; treatment</a>
+        <a href="#questions">Questions to ask</a>
+        <a href="#start">Discuss your options</a>
       </div>
       <div class="foot-col">
         <strong>Visit us</strong>
@@ -355,6 +355,7 @@
 </footer>
 
 <script src="js/lenis.min.js"></script>
+<script src="js/text-entry.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
