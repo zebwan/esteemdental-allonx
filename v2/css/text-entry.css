@@ -26,15 +26,15 @@
 /* ---- badge: <span data-badge>Line one<br>Line two</span> */
 [data-badge] { display: inline-flex; flex-direction: column; align-items: flex-start; }
 .te-bl { position: relative; display: block; padding: 0 12px; overflow: clip; }
-.te-bl i { position: absolute; top: 0; left: -10px; width: 1px; height: 100%; background: var(--te-badge-bg); transition: left .5s cubic-bezier(.44, 0, .56, 1), width .5s cubic-bezier(.44, 0, .56, 1); }
-.te-bl b { position: relative; z-index: 1; display: block; font-weight: inherit; white-space: pre; color: var(--te-badge-ink); transition: color .5s cubic-bezier(.44, 0, .56, 1); }
+.te-bl i { position: absolute; top: 0; left: -10px; width: 1px; height: 100%; background: var(--te-badge-bg); transition: left .38s cubic-bezier(.44, 0, .56, 1), width .38s cubic-bezier(.44, 0, .56, 1); }
+.te-bl b { position: relative; z-index: 1; display: block; font-weight: inherit; white-space: pre; color: var(--te-badge-ink); transition: color .38s cubic-bezier(.44, 0, .56, 1); }
 [data-badge].te-in .te-bl i { left: 0; width: 100%; }
 [data-badge].te-in .te-bl b { color: var(--te-badge-ink-in); }
 
 /* ---- rolling counter: <span data-count="442" data-suffix="+"></span> */
 [data-count] { display: inline-flex; align-items: flex-start; line-height: 1; }
 .te-dg { display: block; height: 1em; overflow: hidden; }
-.te-col { display: flex; flex-direction: column; transition: transform 1.6s cubic-bezier(.76, 0, .24, 1); }
+.te-col { display: flex; flex-direction: column; transition: transform 1.15s cubic-bezier(.76, 0, .24, 1); }
 .te-col span { display: block; height: 1em; line-height: 1; }
 
 @media (prefers-reduced-motion: reduce) {

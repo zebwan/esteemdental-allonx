@@ -23,9 +23,9 @@
      Options: data-wipe-duration="2" (seconds), data-wipe-stagger="0.2", data-wipe-amount="0.35" */
   function wipe(el) {
     if (el.dataset.teDone) return; el.dataset.teDone = "1";
-    var dur = parseFloat(el.getAttribute("data-wipe-duration")) * 1000 || 2000;
+    var dur = parseFloat(el.getAttribute("data-wipe-duration")) * 1000 || 1400;
     var stagger = parseFloat(el.getAttribute("data-wipe-stagger"));
-    if (isNaN(stagger)) stagger = .2;
+    if (isNaN(stagger)) stagger = .1;
     var amount = parseFloat(el.getAttribute("data-wipe-amount")) || .35;
     el.innerHTML = lines(el).map(function (h) {
       return '<span class="te-line"><span class="te-text">' + h + '</span><i class="te-b1"></i></span>';
@@ -61,7 +61,7 @@
     var roll = function () {
       [].forEach.call(el.querySelectorAll(".te-dg"), function (dg, i) {
         var c = dg.firstElementChild;
-        c.style.transitionDelay = (i * .08) + "s";
+        c.style.transitionDelay = (i * .06) + "s";
         c.style.transform = "translateY(" + (-dg.getAttribute("data-d")) + "em)";
       });
     };
