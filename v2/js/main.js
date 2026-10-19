@@ -123,7 +123,7 @@
   var FEATURES = [
     ['How the pieces work together.',
      'Implants sit in the jawbone and support a connected set of replacement teeth. The implants, your new teeth and your bite need to be planned together \u2014 not as separate parts.',
-     'assets/img/step-2.webp', 'A connected full-arch restoration supported by implants', true],
+     'assets/img/step-2.webp', 'A connected full-arch restoration supported by implants'],
     ['The implant.',
      'Titanium dental implants are placed in the jawbone to support the connected replacement teeth. During healing, the surrounding bone integrates with the implants to provide a stable foundation.',
      'assets/img/fan-fixture.webp', 'A single titanium implant seated in the jawbone'],
@@ -168,14 +168,6 @@
         setTimeout(function () {
           els.title.textContent = d[0];
           els.desc.textContent = d[1];
-          var vid = document.getElementById('featVid');
-          if (vid) {
-            /* the client's animation stands in for the still on the overview tab */
-            var useVideo = !!d[4];
-            vid.hidden = !useVideo;
-            els.img.hidden = useVideo;
-            if (useVideo) { vid.play().catch(function(){}); } else { vid.pause(); }
-          }
           els.img.src = d[2];
           els.img.alt = d[3];
           if (onIndex) onIndex(i);
@@ -266,6 +258,45 @@
 
     paint();
     window.addEventListener('resize', paint, { passive: true });
+  })();
+
+  /* ---------- 5b. Hero slider ---------- */
+  (function () {
+    var stage = document.querySelector('[data-hero]');
+    if (!stage) return;
+    var slides = [].slice.call(stage.querySelectorAll('.hslide'));
+    var dots = [].slice.call(stage.querySelectorAll('.hdot'));
+    if (slides.length < 2) return;
+    var i = 0, timer = null, HOLD = 5600;
+
+    function show(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (sl, k) {
+        var on = k === i;
+        sl.classList.toggle('is-on', on);
+        var v = sl.querySelector('video');
+        if (v) { on ? v.play().catch(function () {}) : v.pause(); }
+      });
+      dots.forEach(function (d, k) {
+        d.classList.toggle('is-on', k === i);
+        d.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      });
+    }
+    function start() { if (!reduced) { clearInterval(timer); timer = setInterval(function () { show(i + 1); }, HOLD); } }
+    function stop() { clearInterval(timer); }
+
+    dots.forEach(function (d, k) {
+      d.addEventListener('click', function () { show(k); start(); });
+    });
+    stage.addEventListener('pointerenter', stop);
+    stage.addEventListener('pointerleave', start);
+    /* don't animate a slider nobody is looking at */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+      }, { threshold: 0.2 }).observe(stage);
+    } else { start(); }
+    show(0);
   })();
 
   /* ---------- 6. Word-by-word text reveal ----------
