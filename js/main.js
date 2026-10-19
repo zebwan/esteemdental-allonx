@@ -145,6 +145,14 @@
     });
     track.addEventListener('scroll', sync, { passive: true });
     window.addEventListener('resize', sync, { passive: true });
+    /* The first sync runs before the images have laid out, so the track still
+       measures as non-scrollable and both arrows end up disabled. Re-sync as
+       the content settles. */
+    window.addEventListener('load', sync);
+    track.querySelectorAll('img').forEach(function (im) {
+      if (!im.complete) im.addEventListener('load', sync, { once: true });
+    });
+    if (typeof ResizeObserver === 'function') new ResizeObserver(sync).observe(track);
     sync();
 
     /* pointer drag for mouse users (touch already pans natively) */
