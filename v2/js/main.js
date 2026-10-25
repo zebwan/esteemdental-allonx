@@ -79,6 +79,23 @@
     window.addEventListener('pageshow', nudge);
   })();
 
+  /* ---------- 1c. Button icons and WhatsApp labels ----------
+     The arrows are decoration, so hide them from the accessible name. The
+     label on a WhatsApp button says what it is for rather than where it
+     goes, so the accessible name adds that - unless it already says so. */
+  [].forEach.call(document.querySelectorAll('.btn > i, .nav-link-cta .arr'), function (i) {
+    i.setAttribute('aria-hidden', 'true');
+  });
+  [].forEach.call(document.querySelectorAll('a[data-wa]'), function (a) {
+    if (a.getAttribute('aria-label')) return;
+    /* textContent still carries the arrow, aria-hidden or not, so read the
+       link without its icon */
+    var copy = a.cloneNode(true);
+    [].forEach.call(copy.querySelectorAll('i, .arr'), function (n) { n.remove(); });
+    var label = (copy.textContent || '').replace(/\s+/g, ' ').trim();
+    a.setAttribute('aria-label', /whatsapp/i.test(label) ? label : label + ' on WhatsApp');
+  });
+
   /* ---------- 2. Nav ---------- */
   var navWrap = document.getElementById('navWrap');
   var lastY = window.scrollY, navTicking = false;
