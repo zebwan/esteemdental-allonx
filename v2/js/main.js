@@ -117,62 +117,89 @@
   wireAccordion('.acc-q', '.acc-item');
   wireAccordion('.faq-q', '.faq-item');
 
-  /* ---------- 5. Parts of the treatment + patient carousel ---------- */
+  /* ---------- 5. Sliders + patient carousel ---------- */
 
-  /* a) the picture follows the card you have scrolled to, and the rule under it
-        fills across the section. One read pass, then one write pass. */
-  (function () {
-    var ex = document.querySelector('[data-ex]');
-    if (!ex) return;
-    var wrap = ex.querySelector('.ex-cards');
-    var cards = [].slice.call(ex.querySelectorAll('.ex-card'));
-    var slides = [].slice.call(ex.querySelectorAll('.ex-slide'));
-    var bar = ex.querySelector('.ex-bar i');
-    if (cards.length < 2 || cards.length !== slides.length) return;
-    var cur = 0, sticks = [];
+  /* a) one slider for the parts of the treatment and the treatment stages.
+        It advances itself, and you can take it over with the dots, the
+        arrows, a swipe or the arrow keys. */
+  [].forEach.call(document.querySelectorAll('[data-sld]'), function (sld) {
+    var track = sld.querySelector('.sld-track');
+    var items = [].slice.call(sld.querySelectorAll('.sld-item'));
+    var dots  = sld.querySelector('.sld-dots');
+    if (!track || items.length < 2) return;
 
-    function measure() {
-      sticks = cards.map(function (c) { return parseFloat(getComputedStyle(c).top) || 0; });
-    }
+    var i = 0, timer = null;
+    var hold = parseInt(sld.getAttribute('data-sld-auto'), 10) || 0;
 
-    function show(i) {
-      if (i === cur) return;
-      cur = i;
-      slides.forEach(function (sl, k) {
-        sl.classList.toggle('is-on', k === i);
-        var v = sl.querySelector('video');
-        if (v) { if (k === i) { v.play().catch(function () {}); } else { v.pause(); } }
+    items.forEach(function (it, k) {
+      it.setAttribute('role', 'group');
+      it.setAttribute('aria-roledescription', 'slide');
+      it.setAttribute('aria-label', (k + 1) + ' of ' + items.length);
+    });
+
+    var buttons = [];
+    if (dots) {
+      items.forEach(function (it, k) {
+        var b = document.createElement('button');
+        b.className = 'sld-dot' + (k ? '' : ' is-on');
+        b.type = 'button';
+        b.setAttribute('role', 'tab');
+        b.setAttribute('aria-selected', k ? 'false' : 'true');
+        b.setAttribute('aria-label', 'Go to ' + (k + 1) + ' of ' + items.length);
+        b.addEventListener('click', function () { go(k); restart(); });
+        dots.appendChild(b);
+        buttons.push(b);
       });
-      cards.forEach(function (c, k) { c.classList.toggle('is-on', k === i); });
     }
 
-    function tick() {
-      var box = ex.getBoundingClientRect();                       /* read: cheap gate */
-      if (box.bottom < -300 || box.top > window.innerHeight + 300) return;
-      var tops = cards.map(function (c) { return c.getBoundingClientRect().top; });
-      var wr = wrap.getBoundingClientRect();
-      var h = cards[0].offsetHeight || 1;
-
-      /* the card on top of the pile is the last one that has reached its own
-         sticky position - the cards all share the top of the stage once stuck,
-         so a fixed line down the viewport cannot tell them apart */
-      var i = 0;
-      for (var k = 0; k < tops.length; k++) { if (tops[k] <= sticks[k] + 40) i = k; }
-      var travel = Math.max(1, wr.height - h);
-      var p = Math.min(1, Math.max(0, (sticks[0] - wr.top) / travel));
-
-      show(i);                                                     /* write */
-      if (bar) bar.style.transform = 'translateX(' + ((p - 1) * 100).toFixed(2) + '%)';
+    function paint() {
+      track.style.transform = 'translate3d(' + (-i * 100) + '%,0,0)';
+      buttons.forEach(function (b, k) {
+        b.classList.toggle('is-on', k === i);
+        b.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      });
+      items.forEach(function (it, k) { it.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
     }
-    /* scroll already fires at most once a frame, and the handler reads before it
-       writes, so there is nothing to gain from deferring it to rAF - and a frame
-       that never arrives (a background tab) would strand the whole effect */
-    measure();
-    window.addEventListener('scroll', tick, { passive: true });
-    window.addEventListener('resize', function () { measure(); tick(); }, { passive: true });
-    window.addEventListener('load', function () { measure(); tick(); });
-    tick();
-  })();
+    function go(n) { i = (n + items.length) % items.length; paint(); }
+    function stop() { clearInterval(timer); timer = null; }
+    function restart() {
+      stop();
+      if (hold && !reduced) timer = setInterval(function () { go(i + 1); }, hold);
+    }
+
+    sld.querySelectorAll('[data-sld-dir]').forEach(function (b) {
+      b.addEventListener('click', function () { go(i + (+b.dataset.sldDir)); restart(); });
+    });
+
+    /* hold still while it is being read or pointed at */
+    sld.addEventListener('pointerenter', stop);
+    sld.addEventListener('pointerleave', restart);
+    sld.addEventListener('focusin', stop);
+    sld.addEventListener('focusout', restart);
+
+    /* swipe */
+    var x0 = null, dx = 0;
+    sld.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      x0 = e.clientX; dx = 0; stop();
+    });
+    sld.addEventListener('pointermove', function (e) { if (x0 !== null) dx = e.clientX - x0; });
+    function release() {
+      if (x0 === null) return;
+      if (Math.abs(dx) > 44) go(i + (dx < 0 ? 1 : -1));
+      x0 = null; dx = 0; restart();
+    }
+    sld.addEventListener('pointerup', release);
+    sld.addEventListener('pointercancel', release);
+
+    sld.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { go(i + 1); restart(); }
+      else if (e.key === 'ArrowLeft') { go(i - 1); restart(); }
+    });
+
+    paint();
+    restart();
+  });
 
   /* c) patient carousel */
   (function () {
@@ -236,30 +263,6 @@
 
     paint();
     window.addEventListener('resize', paint, { passive: true });
-  })();
-
-  /* ---------- 5a2. Journey cards: shrink as the next card stacks on top ----
-     One read pass then one write pass per frame, and only while the stack is
-     near the viewport, so this costs nothing for the rest of the page. */
-  (function () {
-    var stack = document.querySelector('[data-stack]');
-    if (!stack || reduced) return;
-    var cards = [].slice.call(stack.querySelectorAll('.stack-card'));
-    if (cards.length < 2) return;
-    function tick() {
-      var box = stack.getBoundingClientRect();                                       /* read */
-      if (box.bottom < -300 || box.top > window.innerHeight + 300) return;
-      var tops = cards.map(function (c) { return c.getBoundingClientRect().top; });
-      var h = cards[0].offsetHeight || 1;
-      for (var i = 0; i < cards.length - 1; i++) {                                   /* write */
-        var gap = tops[i + 1] - tops[i];
-        var p = Math.min(1, Math.max(0, 1 - (gap - 14) / h));
-        cards[i].style.transform = p ? 'scale(' + (1 - p * 0.05).toFixed(4) + ')' : '';
-      }
-    }
-    window.addEventListener('scroll', tick, { passive: true });
-    window.addEventListener('resize', tick, { passive: true });
-    tick();
   })();
 
   /* ---------- 5b. Hero slider ---------- */
