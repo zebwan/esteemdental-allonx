@@ -337,13 +337,8 @@ section.tint{ background:var(--cream-2); }
 }
 
 /* ============================================================
-   ABOUT / SOLUTION — statement, 3-up row, stats strip
+   ABOUT / SOLUTION — 3-up row, stats strip
    ============================================================ */
-.about-statement{
-  font-family:'Prata',Georgia,serif;
-  font-size:34px; line-height:1.4; letter-spacing:-.005em;
-  color:var(--brown); font-weight:400; max-width:900px; margin:20px 0 48px;
-}
 .about-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; align-items:stretch; }
 
 .ab-card{
@@ -595,6 +590,9 @@ section.tint{ background:var(--cream-2); }
    ============================================================ */
 .kicker{ display:inline-block; font-size:13px; line-height:1.3; letter-spacing:0;
   font-weight:600; color:var(--brown-mid); margin-bottom:18px; }
+/* the slider label needs air under a section head, which the retired
+   statement block used to provide */
+.head-row + .kicker{ margin-top:54px; }
 
 .sld{ margin-top:8px; }
 .sld-view{ overflow:hidden; border-radius:24px; box-shadow:var(--lift); }
@@ -642,6 +640,15 @@ section.tint{ background:var(--cream-2); }
   transition:background-color .35s var(--ease), color .35s var(--ease), transform .35s var(--ease);
 }
 .sld-btn:hover{ background:var(--brown); color:#fff; transform:translateY(-2px); }
+
+/* a short ask at the end of each section, so the page keeps offering a way in */
+.sec-cta{
+  display:flex; align-items:center; justify-content:space-between; gap:36px;
+  flex-wrap:wrap; margin-top:44px; padding-top:32px;
+  border-top:1px solid var(--line);
+}
+.sec-cta p{ font-size:18px; line-height:29px; color:var(--ink); max-width:46ch; }
+.sec-cta p strong{ font-weight:600; color:var(--brown); }
 
 /* ============================================================
    BENEFITS
@@ -793,7 +800,6 @@ footer .lede strong{ color:#fff; }
   section{ padding:60px 0; }
   h1{ font-size:52px; }
   h2{ font-size:34px; }
-  .about-statement,.cta-statement{ font-size:27px; }
   .hero{ padding:120px 0 64px; }
   .hero-grid{ grid-template-columns:1fr; gap:36px; }
   /* the film is 3:4, so the panel follows it rather than cropping it */
@@ -811,13 +817,13 @@ footer .lede strong{ color:#fff; }
   .case-grid{ grid-template-columns:1fr; gap:16px; margin-top:32px; }
   .foot-top{ grid-template-columns:1fr; gap:36px; padding-bottom:40px; }
   footer{ padding:56px 0 30px; border-radius:24px 24px 0 0; }
-  .about-statement{ margin-bottom:32px; }
-  .about-grid{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; }
   .ab-media{ min-height:260px; }
   .stats{ grid-template-columns:repeat(2,1fr); gap:28px 20px; margin-top:40px; padding-top:32px; }
   .stats strong{ font-size:34px; }
   .pin{ padding:60px 0; }
   .head-row{ grid-template-columns:1fr; align-items:start; gap:22px; }
+  .head-row + .kicker{ margin-top:34px; }
   .head-aside{ max-width:none; justify-self:start; padding-top:16px; }
   .head{ max-width:none; }
   .head h2{ font-size:34px; }
@@ -840,7 +846,6 @@ footer .lede strong{ color:#fff; }
   h1{ font-size:34px; }
   h2{ font-size:26px; }
   h3{ font-size:19px; }
-  .about-statement,.cta-statement{ font-size:22px; line-height:1.45; }
   .hero{ padding:104px 0 52px; }
   .nav{ height:72px; }
   .sld-view{ border-radius:18px; }
@@ -864,6 +869,9 @@ footer .lede strong{ color:#fff; }
   .care-card{ min-height:0; }
   .svc-card{ flex-basis:280px; padding:22px 20px 24px; gap:24px; }
   .sld-btn{ width:42px;height:42px;font-size:15px; }
+  .sec-cta{ margin-top:32px; padding-top:24px; gap:20px; }
+  .sec-cta p{ font-size:16px; line-height:26px; }
+  .sec-cta .btn{ width:100%; justify-content:center; }
   .case-card{ flex-basis:300px; padding:18px; }
   .case-top{ grid-template-columns:1fr; }
   .case-stats{ grid-template-columns:1fr; gap:12px; }
