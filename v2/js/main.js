@@ -65,6 +65,20 @@
     });
   }
 
+  /* ---------- 1b. Hero film ----------
+     It is muted, looped and inline, so autoplay is allowed - but a tab that
+     loads in the background, or a browser that has paused media, leaves it
+     stopped. Nudge it on load and whenever the tab comes back. */
+  (function () {
+    var v = document.querySelector('.hero-media video');
+    if (!v) return;
+    function nudge() { if (v.paused) { v.play().catch(function () {}); } }
+    nudge();
+    v.addEventListener('loadeddata', nudge);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) nudge(); });
+    window.addEventListener('pageshow', nudge);
+  })();
+
   /* ---------- 2. Nav ---------- */
   var navWrap = document.getElementById('navWrap');
   var lastY = window.scrollY, navTicking = false;
