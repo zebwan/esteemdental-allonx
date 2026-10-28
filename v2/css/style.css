@@ -686,7 +686,9 @@ section.tint{ background:var(--cream-2); }
    stretched to the full width, which made the square one enormous and left
    the wide one stranded at the top of the track. The box also holds its
    height while a lazy image is still loading. */
-.pmedia{ height:clamp(260px, 42vh, 420px); display:flex; align-items:center;
+/* the client's cases are square, so give them more height than the old wide
+   strip needed - otherwise a 1:1 photo sits small in the middle of the row */
+.pmedia{ height:clamp(300px, 58vh, 560px); display:flex; align-items:center;
   justify-content:center; min-height:0; }
 .pslide img{
   max-width:100%; max-height:100%; width:auto; height:auto;
@@ -869,6 +871,9 @@ footer .lede strong{ color:#fff; }
   .care-card{ min-height:0; }
   .svc-card{ flex-basis:280px; padding:22px 20px 24px; gap:24px; }
   .sld-btn{ width:42px;height:42px;font-size:15px; }
+  /* on a narrow screen a square case is capped by the width, so the box
+     follows the width instead of leaving a band of empty cream below it */
+  .pmedia{ height:clamp(280px, 92vw, 420px); }
   .sec-cta{ margin-top:32px; padding-top:24px; gap:20px; }
   .sec-cta p{ font-size:16px; line-height:26px; }
   .sec-cta .btn{ width:100%; justify-content:center; }
