@@ -188,8 +188,9 @@ section.tint{ background:var(--cream-2); }
 .brand{ display:block; line-height:1; }
 /* The lockup is deliberately not scoped to .brand - the footer card uses
    the same mark, "dental clinic" stacked under "esteem" on its own rule.
-   Sized from the clinic's logo file, where "dental clinic" measures .845
-   of the width of "esteem". */
+   "dental clinic" is tracked out rather than set large, so to grow the
+   letters the tracking comes in to match - the block still has to finish
+   inside the rule, which is the width of "esteem". */
 .mark{ display:block; text-align:center; }
 .brand .mark{ color:var(--brown); transition:color .45s var(--ease); }
 .mark .n{
@@ -198,8 +199,8 @@ section.tint{ background:var(--cream-2); }
   border-bottom:1px solid currentColor;
 }
 .mark .s{
-  display:block; font-family:'Inter',sans-serif; font-size:8.3px; line-height:1.4;
-  letter-spacing:.446em; text-indent:.446em; padding-top:5px; font-weight:400;
+  display:block; font-family:'Inter',sans-serif; font-size:11.6px; line-height:1.4;
+  letter-spacing:.282em; text-indent:.282em; padding-top:6px; font-weight:400;
 }
 
 .nav-links{ display:flex; align-items:center; gap:28px; }
@@ -744,7 +745,7 @@ footer .lede strong{ color:#fff; }
 }
 .foot-card .mark{ display:inline-block; align-self:flex-start; color:#fff; margin-bottom:2px; }
 .foot-card .mark .n{ font-size:27px; }
-.foot-card .mark .s{ font-size:8.6px; }
+.foot-card .mark .s{ font-size:12px; }
 .foot-card address{ font-style:normal; color:rgba(255,255,255,.8); }
 .foot-rows{ display:flex; flex-direction:column; gap:3px; }
 .foot-rows a{ transition:color .3s var(--ease); }
@@ -912,9 +913,9 @@ footer .lede strong{ color:#fff; }
   /* compact nav bar */
   .nav .container{ gap:10px; }
   .brand .mark .n{ font-size:22px; }
-  .brand .mark .s{ font-size:7px; }
+  .brand .mark .s{ font-size:9.8px; }
   .brand .mark .n{ font-size:21px; }
-  .brand .mark .s{ font-size:6.7px; }
+  .brand .mark .s{ font-size:9.4px; }
   .nav-cta .btn{ height:40px; padding:6px 16px 6px 6px; font-size:13px; white-space:nowrap; }
   .nav-cta .btn i{ width:28px;height:28px;flex:0 0 28px; }
   .burger{ width:40px;height:40px;flex:0 0 40px; }
