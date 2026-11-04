@@ -186,14 +186,19 @@ section.tint{ background:var(--cream-2); }
 }
 .nav .container{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
 .brand{ display:block; line-height:1; }
-.brand .mark{ display:block; text-align:center; color:var(--brown); transition:color .45s var(--ease); }
-.brand .mark .n{
+/* The lockup is deliberately not scoped to .brand - the footer card uses
+   the same mark, "dental clinic" stacked under "esteem" on its own rule.
+   Sized from the clinic's logo file, where "dental clinic" measures .845
+   of the width of "esteem". */
+.mark{ display:block; text-align:center; }
+.brand .mark{ color:var(--brown); transition:color .45s var(--ease); }
+.mark .n{
   display:block; font-family:'Prata',Georgia,serif; font-size:26px; line-height:.51;
   letter-spacing:.149em; text-indent:.149em; padding-bottom:7px;
   border-bottom:1px solid currentColor;
 }
-.brand .mark .s{
-  display:block; font-family:'Inter',sans-serif; font-size:7.15px; line-height:1.4;
+.mark .s{
+  display:block; font-family:'Inter',sans-serif; font-size:8.3px; line-height:1.4;
   letter-spacing:.446em; text-indent:.446em; padding-top:5px; font-weight:400;
 }
 
@@ -737,9 +742,9 @@ footer .lede strong{ color:#fff; }
   display:flex; flex-direction:column; gap:18px;
   font-size:15px; line-height:24px;
 }
-.foot-card .mark{ display:block; color:#fff; margin-bottom:2px; }
+.foot-card .mark{ display:inline-block; align-self:flex-start; color:#fff; margin-bottom:2px; }
 .foot-card .mark .n{ font-size:27px; }
-.foot-card .mark .s{ font-size:7.4px; }
+.foot-card .mark .s{ font-size:8.6px; }
 .foot-card address{ font-style:normal; color:rgba(255,255,255,.8); }
 .foot-rows{ display:flex; flex-direction:column; gap:3px; }
 .foot-rows a{ transition:color .3s var(--ease); }
@@ -907,9 +912,9 @@ footer .lede strong{ color:#fff; }
   /* compact nav bar */
   .nav .container{ gap:10px; }
   .brand .mark .n{ font-size:22px; }
-  .brand .mark .s{ font-size:6.05px; }
+  .brand .mark .s{ font-size:7px; }
   .brand .mark .n{ font-size:21px; }
-  .brand .mark .s{ font-size:5.8px; }
+  .brand .mark .s{ font-size:6.7px; }
   .nav-cta .btn{ height:40px; padding:6px 16px 6px 6px; font-size:13px; white-space:nowrap; }
   .nav-cta .btn i{ width:28px;height:28px;flex:0 0 28px; }
   .burger{ width:40px;height:40px;flex:0 0 40px; }
