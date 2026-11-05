@@ -296,11 +296,8 @@ section.tint{ background:var(--cream-2); }
   padding:11px 16px; border-radius:1000px;
   border:0; background:var(--cream-3);
 }
-/* the film's backdrop is keyed to the page cream, so the panel carries the
-   same colour and the film is contained rather than cropped - the letterbox
-   is the page, and the jaw is never cut */
-.hero-media{ position:relative; border-radius:20px; overflow:hidden; aspect-ratio:4/3; background:var(--cream); }
-.hero-media video{ width:100%; height:100%; object-fit:contain; display:block; }
+.hero-media{ position:relative; border-radius:20px; overflow:hidden; aspect-ratio:4/3; background:var(--cream-3); }
+.hero-media video{ width:100%; height:100%; object-fit:cover; display:block; }
 
 /* the keyword line inside the H1 — same heading, plain type */
 .h1-main{ display:block; }
