@@ -967,3 +967,89 @@ h1 [data-wipe], h2[data-wipe]{ gap:0; }
   .nav-link-cta{ display:none; }
   .nav-cta{ gap:0; }
 }
+
+
+/* ============================================================
+   AMENDMENTS — header call button, bigger CTAs, floating WhatsApp
+   The audience skews older, so every action is a filled, raised
+   pill with a large label: never a bare underlined word.
+   ============================================================ */
+
+/* ---- header: the client's number, as a button ---- */
+.nav-call{
+  display:inline-flex; align-items:center; gap:10px;
+  height:46px; padding:0 20px 0 14px; border-radius:30px;
+  background:var(--brown); color:#fff;
+  font-size:16px; font-weight:600; letter-spacing:.1px; white-space:nowrap;
+  box-shadow:0 6px 18px rgba(134,85,67,.28);
+  transition:background-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.nav-call .ic{ font-size:18px; line-height:1; }
+.nav-call:hover{ background:var(--brown-deep); transform:translateY(-2px); box-shadow:0 10px 24px rgba(134,85,67,.34); }
+
+/* ---- section + hero actions: large, raised, obviously tappable ---- */
+.sec-cta .btn,
+.head-actions .btn{
+  height:60px; padding:8px 30px 8px 10px;
+  font-size:18px; font-weight:600; letter-spacing:.1px;
+}
+.sec-cta .btn i,
+.head-actions .btn i{ width:40px; height:40px; flex:0 0 40px; font-size:16px; }
+.sec-cta .btn-primary,
+.head-actions .btn-primary{ box-shadow:0 8px 22px rgba(134,85,67,.30); }
+.sec-cta .btn-primary:hover,
+.head-actions .btn-primary:hover{ box-shadow:0 12px 28px rgba(134,85,67,.36); }
+.sec-cta .btn-light,
+.head-actions .btn-light{ border-color:var(--sand); box-shadow:0 4px 14px rgba(22,18,15,.07); }
+
+/* two actions in one section footer */
+.sec-cta-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+
+/* a visible keyboard focus ring on every action */
+.btn:focus-visible,
+.nav-call:focus-visible,
+.wa-float:focus-visible{ outline:3px solid var(--brown); outline-offset:3px; }
+
+/* ---- floating WhatsApp ---- */
+.wa-float{
+  position:fixed; right:22px; bottom:22px; z-index:60;
+  display:inline-flex; align-items:center; gap:12px;
+  height:62px; padding:0 24px 0 10px; border-radius:40px;
+  /* deep green, not the brand #25d366: white on that is only 1.98:1 and this
+     audience needs the label to be readable. The mark inside stays bright, so
+     the button still reads as WhatsApp at a glance. */
+  background:#0e6b35; color:#fff;
+  font-size:17px; font-weight:600; letter-spacing:.1px; white-space:nowrap;
+  box-shadow:0 10px 28px rgba(0,0,0,.26);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s var(--ease);
+}
+.wa-float .wa-ic{
+  width:42px; height:42px; flex:0 0 42px; border-radius:50%;
+  background:#25d366; color:#fff; display:grid; place-items:center;
+}
+.wa-float:hover{ background:#0a5429; transform:translateY(-3px); box-shadow:0 16px 34px rgba(0,0,0,.3); }
+
+@media (max-width:809.98px){
+  /* the call button stays in the bar when the links collapse */
+  .nav-call{ height:42px; padding:0 16px 0 12px; font-size:15px; }
+  .nav-cta{ gap:12px; }
+  .sec-cta .btn,
+  .head-actions .btn{ height:58px; font-size:17px; }
+  .wa-float{ right:14px; bottom:14px; height:58px; padding:0 20px 0 9px; font-size:16px; }
+}
+@media (max-width:479.98px){
+  /* keep the number tappable on the narrowest phones */
+  .nav-call{ padding:0 13px 0 11px; font-size:14px; gap:7px; }
+  .nav-call .ic{ font-size:16px; }
+  .sec-cta .btn,
+  .head-actions .btn{ width:100%; justify-content:flex-start; }
+  .sec-cta-actions{ width:100%; }
+  /* the label stays on phones too: an unlabelled icon is the thing this
+     audience is least likely to recognise as a button */
+  .wa-float{ right:12px; bottom:12px; height:54px; padding:0 18px 0 8px; font-size:15px; gap:9px; }
+  .wa-float .wa-ic{ width:38px; height:38px; flex:0 0 38px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .nav-call, .wa-float{ transition:none; }
+  .nav-call:hover, .wa-float:hover{ transform:none; }
+}

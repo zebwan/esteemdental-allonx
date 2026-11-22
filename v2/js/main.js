@@ -3,7 +3,7 @@
    Motion reproduced from the Dentistry X Framer template:
    · reveal        opacity 0→1 + translateY(100px)→0, 0.1s stagger
    · pop           scale(0)→scale(1) for icons
-   · nav           fixed, hides on scroll down, blurs once scrolled
+   · nav           fixed, always visible, blurs once scrolled
    · pinned tracks sticky section + translateX smoothed with a lerp
    · text reveal   word-by-word opacity .4→1 across scroll progress
    · accordions    numbered list + FAQ
@@ -102,10 +102,8 @@
   function onNavScroll() {
     var y = window.scrollY;
     navWrap.classList.toggle('scrolled', y > 10);
-    if (!navWrap.classList.contains('open')) {
-      if (y > lastY && y > 200) navWrap.classList.add('hidden');
-      else navWrap.classList.remove('hidden');
-    }
+    /* the bar is pinned: it never hides on scroll down */
+    navWrap.classList.remove('hidden');
     lastY = y; navTicking = false;
   }
   window.addEventListener('scroll', function () {
